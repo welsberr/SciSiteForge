@@ -20,10 +20,10 @@
           <li><a href="/{{ lang }}/resources/">Resources</a></li>
         </ul>
       </nav>
+      <!-- In base.html -->
       <select id="lang-switch" onchange="switchLanguage(this.value)">
-        {{#each languages}}
-        <option value="{{code}}" {{#if (eq code ../lang)}}selected{{/if}}>{{name}}</option>
-        {{/each}}
+	<!-- Languages will be inserted here by build script -->
+	{{language_options}}
       </select>
     </div>
   </div>
