@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ title }} — {{ site_title }}</title>
+  <link rel="stylesheet" href="/theme/style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="/{{ lang }}/">{{ site_title }}</a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <nav>
+        <ul>
+          <li><a href="/{{ lang }}/">Home</a></li>
+          <li><a href="/{{ lang }}/apps/">Apps</a></li>
+          <li><a href="/{{ lang }}/notebook/">Notebook</a></li>
+          <li><a href="/{{ lang }}/resources/">Resources</a></li>
+        </ul>
+      </nav>
+      <select id="lang-switch" onchange="switchLanguage(this.value)">
+        {{#each languages}}
+        <option value="{{code}}" {{#if (eq code ../lang)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  {{> content }}
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; <span id="year">2024</span> {{ site_title }}. {{ license }}</p>
+    <p>
+      <a href="{{ github_url }}">GitHub</a> • 
+      <a href="mailto:{{ contact_email }}">Contact</a> • 
+      <a href="/{{ lang }}/disclaimer/">Disclaimer</a>
+    </p>
+  </div>
+</footer>
+
+<script src="/theme/main.js"></script>
+</body>
+</html>
