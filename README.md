@@ -42,7 +42,7 @@ This repository provides a reusable foundation for sites like **evo-edu.org**, f
 
 ## 📜 License
 MIT — free to use, modify, and redistribute.
-x
+
 ## AI Disclosure
 
 This code and documentation was primarily provided by Alibaba's Qwen3 Max generative AI model with prompting by Wesley R. Elsberry.
