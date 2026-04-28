@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page_title }} — {{ site_title }}</title>
+  <meta name="description" content="{{ description }}" />
+  <link rel="stylesheet" href="{{ theme_stylesheet_href }}">
+  <script src="{{ theme_script_href }}" defer></script>
+</head>
+<body class="{{ body_class }}">
+  <div class="{{ site_shell_class }}">
+    <header class="site-topbar">
+      <div class="brand-block">
+        <span class="brand-mark">{{ theme_display_name }}</span>
+        <a href="/">{{ site_title }}</a>
+        <p class="brand-summary">{{ theme_description }}</p>
+      </div>
+      <nav class="site-nav" aria-label="Primary navigation">
+        {{ navigation_html }}
+        <select id="lang-switch" onchange="switchLanguage(this.value)">
+          {{ language_options }}
+        </select>
+        {{ language_policy_html }}
+      </nav>
+    </header>
+
+    <section class="hero-card">
+      <p class="eyebrow">{{ hero_kicker }}</p>
+      <div class="hero-grid">
+        <div>
+          <h1>{{ hero_title }}</h1>
+          <p class="lede">{{ hero_lede }}</p>
+          <div class="hero-actions">
+            {{ hero_actions_html }}
+          </div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <strong>Theme</strong>
+            <span>{{ theme_display_name }}</span>
+          </div>
+          <div class="stat-card">
+            <strong>Language</strong>
+            <span>{{ lang }}</span>
+          </div>
+          <div class="stat-card">
+            <strong>Sources</strong>
+            <span>doclift, GroundRecall, Didactopus, CiteGeist</span>
+          </div>
+          <div class="stat-card">
+            <strong>LLM</strong>
+            <span>GenieHive-backed translation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card" id="overview">
+      <p class="section-kicker">Overview</p>
+      <h2 class="section-heading">What this theme supports</h2>
+      <div class="feature-grid">
+        {{ feature_cards_html }}
+      </div>
+    </section>
+
+    <section class="content-card">
+      <p class="section-kicker">Notebook and apps</p>
+      <h2 class="section-heading">Structured sources and learning artifacts</h2>
+      {{ notebook_html }}
+      <div class="path-grid">
+        {{ section_cards_html }}
+        {{ app_cards_html }}
+      </div>
+    </section>
+
+    <section class="note-band" id="themes">
+      <h2 class="section-heading">Theme catalog</h2>
+      <p>
+        SciSiteForge ships multiple theme presets so different science sites can share the same
+        content pipeline while presenting different reading experiences.
+      </p>
+    </section>
+
+    <section class="footer-card">
+      <div>
+        <h3>{{ site_title }}</h3>
+        <p>{{ license }}</p>
+      </div>
+      <small>
+        <a href="{{ github_url }}">GitHub</a> · <a href="mailto:{{ contact_email }}">Contact</a>
+      </small>
+    </section>
+  </div>
+</body>
+</html>

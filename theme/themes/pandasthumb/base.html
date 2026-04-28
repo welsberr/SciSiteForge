@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} — {{ site_title }}</title>
+  <meta name="description" content="{{ description }}">
+  <link rel="stylesheet" href="{{ theme_stylesheet_href }}">
+  <script src="{{ theme_script_href }}" defer></script>
+</head>
+<body class="{{ body_class }}">
+<header class="site-header">
+  <span class="site-name"><a href="/">{{ site_title }}</a></span>
+  <span class="site-tagline">{{ theme_description }}</span>
+  <select id="lang-switch" onchange="switchLanguage(this.value)">
+    {{ language_options }}
+  </select>
+  {{ language_policy_html }}
+</header>
+
+<main>
+  <div class="card">
+    <h1>{{ hero_title }}</h1>
+    <p>{{ hero_lede }}</p>
+    <div class="button-row">
+      {{ hero_actions_html }}
+    </div>
+  </div>
+
+  <section class="topic">
+    <h2>Feature cards</h2>
+    <div class="cards-grid">
+      {{ feature_cards_html }}
+    </div>
+  </section>
+
+  <section class="topic">
+    <h2>Notebook and app content</h2>
+    {{ notebook_html }}
+    <div class="cards-grid">
+      {{ section_cards_html }}
+      {{ app_cards_html }}
+    </div>
+  </section>
+
+  <section class="topic">
+    <h2>Bibliography</h2>
+    <ul class="archive-list bibliography-list">
+      {{ bibliography_html }}
+    </ul>
+  </section>
+</main>
+<footer class="site-footer">
+<p>{{ site_title }} · {{ license }}</p>
+</footer>
+</body>
+</html>

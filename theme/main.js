@@ -1,15 +1,30 @@
-// Auto-update year
-document.getElementById('year')?.textContent = new Date().getFullYear();
+window.langCode = document.documentElement.lang || "en";
 
-// Language switcher
+document.getElementById("year")?.textContent = new Date().getFullYear();
+
 function switchLanguage(lang) {
-  const currentPath = window.location.pathname;
-  let newPath = currentPath.replace(new RegExp(`^/${window.langCode}/|^/`), `/${lang}/`);
-  if (!currentPath.startsWith(`/${lang}/`)) {
-    newPath = `/${lang}${currentPath}`;
+  if (!lang) return;
+  const currentPath = window.location.pathname || "/";
+  const parts = currentPath.split("/").filter(Boolean);
+  if (parts.length > 0 && parts[0].length === 2) {
+    parts[0] = lang;
+  } else {
+    parts.unshift(lang);
   }
-  window.location.href = newPath;
+  const nextPath = "/" + parts.join("/");
+  window.location.href = nextPath.endsWith("/") ? nextPath : nextPath + (currentPath.endsWith("/") ? "/" : "");
 }
 
-// Optional: expose langCode for JS logic
-window.langCode = document.documentElement.lang || 'en';
+document.querySelectorAll("[data-src]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.getAttribute("data-src");
+    if (!target) return;
+    const content = button.parentElement?.querySelector(".content");
+    if (!content) return;
+    fetch(target)
+      .then((resp) => resp.text())
+      .then((html) => {
+        content.innerHTML = html;
+      });
+  });
+});

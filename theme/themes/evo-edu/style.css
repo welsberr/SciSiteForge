@@ -1,0 +1,375 @@
+:root {
+  --bg-top: #f8f4ec;
+  --bg-bottom: #e7dcc9;
+  --paper: rgba(255, 252, 247, 0.84);
+  --paper-strong: rgba(255, 252, 247, 0.94);
+  --ink: #16251f;
+  --muted: #5b675f;
+  --accent: #0f766e;
+  --accent-strong: #0b5d57;
+  --accent-warm: #bc6c25;
+  --line: rgba(22, 37, 31, 0.12);
+  --shadow: 0 24px 70px rgba(24, 35, 30, 0.12);
+  --max-width: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(188, 108, 37, 0.16), transparent 24%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom) 72%, #dfd3bf);
+}
+
+a {
+  color: var(--accent-strong);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.site-shell {
+  width: min(var(--max-width), calc(100vw - 28px));
+  margin: 0 auto;
+  padding: 18px 0 40px;
+}
+
+.site-topbar,
+.hero-card,
+.content-card,
+.feature-card,
+.footer-card,
+.path-card,
+.resource-card,
+.note-band {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.site-topbar {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+
+.brand-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-mark {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.76rem;
+}
+
+.brand-block a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.brand-summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.site-nav a,
+.button-link,
+.button-link-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 11px 16px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.site-nav a,
+.button-link-secondary {
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.button-link {
+  color: white;
+  background: var(--accent);
+  border: 1px solid transparent;
+}
+
+.site-nav a:hover,
+.button-link:hover,
+.button-link-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.hero-card {
+  padding: 34px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.hero-card h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.6rem, 6vw, 4.9rem);
+  line-height: 0.96;
+}
+
+.hero-card .lede,
+.intro-text,
+.content-card p,
+.feature-card p,
+.path-card p,
+.resource-card p,
+.footer-card p,
+.note-band p,
+.roadmap-phase li {
+  color: var(--muted);
+  line-height: 1.62;
+  font-size: 1.02rem;
+}
+
+.hero-actions,
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat-grid,
+.feature-grid,
+.path-grid,
+.resource-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.stat-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stat-card {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.stat-card span {
+  color: var(--muted);
+}
+
+.content-card,
+.note-band,
+.footer-card {
+  padding: 26px;
+  margin-bottom: 18px;
+}
+
+.section-heading {
+  margin: 0 0 14px;
+  font-size: 1.8rem;
+}
+
+.section-kicker {
+  margin: 0 0 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+}
+
+.feature-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-card,
+.path-card,
+.resource-card {
+  padding: 22px;
+}
+
+.feature-card h3,
+.path-card h3,
+.resource-card h3,
+.content-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.28rem;
+}
+
+.meta-list,
+.plain-list {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.path-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.resource-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.note-band {
+  background: rgba(15, 118, 110, 0.1);
+}
+
+.roadmap-phase {
+  padding-left: 20px;
+}
+
+.roadmap-phase li + li {
+  margin-top: 8px;
+}
+
+.footer-card {
+  display: flex;
+  gap: 18px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.footer-card small {
+  color: var(--muted);
+}
+
+.redirect-card {
+  max-width: 720px;
+  margin: 7vh auto;
+}
+
+.notebook-panel {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.76);
+  margin: 18px 0;
+}
+
+.notebook-panel h2,
+.notebook-panel h3 {
+  margin-top: 0;
+}
+
+.notebook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.notebook-panel .meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 980px) {
+  .hero-grid,
+  .feature-grid,
+  .path-grid,
+  .resource-grid,
+  .notebook-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-topbar,
+  .footer-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-nav {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-shell {
+    width: min(var(--max-width), calc(100vw - 18px));
+    padding-top: 10px;
+  }
+
+  .site-topbar,
+  .hero-card,
+  .content-card,
+  .feature-card,
+  .path-card,
+  .resource-card,
+  .notebook-panel,
+  .footer-card,
+  .note-band {
+    border-radius: 20px;
+  }
+
+  .hero-card,
+  .content-card,
+  .feature-card,
+  .path-card,
+  .resource-card,
+  .notebook-panel,
+  .footer-card,
+  .note-band {
+    padding: 20px;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+}

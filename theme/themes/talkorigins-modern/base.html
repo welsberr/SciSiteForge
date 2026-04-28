@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ page_title }} — {{ site_title }}</title>
+  <meta name="description" content="{{ description }}" />
+  <link rel="stylesheet" href="{{ theme_stylesheet_href }}" />
+  <link rel="icon" href="{{ theme_asset_prefix }}/toa.ico" sizes="any" />
+  <script src="{{ theme_script_href }}" defer></script>
+</head>
+<body class="{{ body_class }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="{{ site_shell_class }}">
+    <header class="site-header">
+      <div class="brand-block">
+        <div class="brand-row">
+          <a class="brand-mark" href="/" aria-label="{{ site_title }} home">
+            <img src="{{ theme_asset_prefix }}/toa_logo_001_edit_001.png" alt="{{ site_title }} logo" />
+          </a>
+          <div class="brand-copy">
+            <p class="brand-kicker">{{ hero_kicker }}</p>
+            <a class="brand-title" href="/">{{ site_title }}</a>
+            <p class="brand-summary">{{ theme_description }}</p>
+          </div>
+        </div>
+      </div>
+      <nav class="top-nav" aria-label="Primary navigation">
+        {{ navigation_html }}
+        <select id="lang-switch" onchange="switchLanguage(this.value)">
+          {{ language_options }}
+        </select>
+        {{ language_policy_html }}
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero-panel">
+        <p class="eyebrow">{{ hero_kicker }}</p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>{{ hero_title }}</h1>
+            <div class="lede">{{ hero_lede }}</div>
+            <div class="button-row">
+              {{ hero_actions_html }}
+            </div>
+          </div>
+          <div class="continuity-note hero-note">
+            <p class="eyebrow">Framework</p>
+            <h2>Modular, static, and reviewable</h2>
+            <p>This theme is intended to prove the modernization line without giving up the archive posture.</p>
+            <ul class="link-list compact-list">
+              <li>Responsive reading</li>
+              <li>Reusable content blocks</li>
+              <li>Search and bibliography ready</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-panel">
+        <h2>Feature cards</h2>
+        <div class="feature-grid">
+          {{ feature_cards_html }}
+        </div>
+      </section>
+
+      <section class="content-panel">
+        <h2>Notebook and app content</h2>
+        {{ notebook_html }}
+        <div class="section-grid">
+          {{ section_cards_html }}
+          {{ app_cards_html }}
+        </div>
+      </section>
+
+      <section class="content-panel">
+        <h2>Bibliography</h2>
+        <ul class="archive-list bibliography-list">
+          {{ bibliography_html }}
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-note"><strong>{{ site_title }}</strong> is the current SciSiteForge proving ground for modern archive-style science sites.</p>
+    </footer>
+  </div>
+</body>
+</html>

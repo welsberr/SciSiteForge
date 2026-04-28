@@ -1,74 +1,55 @@
 # SciSiteForge Scripts
 
-## 🛠️ Build
+## Build
 
-🧪 Usage Example 
+Initialize a site config:
 
-    Initialize config: 
-    bash
-     
+```bash
+cd /opt/www/dev/SciSiteForge
+python3 scripts/build.py --init
+```
 
- 
+Build a site:
 
-cd domain_di/framework
-python build.py --init
- → creates site.json
- 
- 
-Build English site: 
- 
- 
-    python build.py --config site.json --output ../content/en/
- 
- 
+```bash
+python3 scripts/build.py --config site.json --output /tmp/scisiteforge-site
+```
 
-Build Spanish site (after editing site.json to set "lang": "es"): 
-bash
- 
+The shipped theme presets are:
 
-     
-    python build.py --config site-es.json --output ../content/es/
-     
-     
-     
+- `evo-edu`
+- `talkorigins-modern`
+- `pandasthumb`
 
- 
-### Benefits 
-
-    - No runtime dependencies: Output is pure static HTML/CSS/JS  
-    - Reusable: Same framework for any educational site  
-    - Customizable: Each project has its own site.json  
-    - Automation-friendly: Integrate into CI/CD or translation pipelines
-     
-
-
+Use `talkorigins-modern` as the proving ground for the
+`www2.talkorigins.org` modernization line.
 
 ## Translate
 
-This site framework supports offline multilingual translation using Llamafile.
+Translation is optional and separate from the static build. The current
+translation provider is GenieHive through its OpenAI-compatible chat endpoint.
 
-### Prerequisites
-- Download a multilingual GGUF model (e.g., `mistral-7b-instruct.Q5_K_M.gguf`)
-- Install [Llamafile](https://github.com/Mozilla-Ocho/llamafile)
-- Python 3 with `requests` and `beautifulsoup4`
+See `docs/GENIEHIVE_TRANSLATION.md` for the SciSiteForge client-side
+configuration guide and the GenieHive repository's
+`docs/translation_support.md` for the control-plane and node-side notes.
 
-### Steps
-1. Launch Llamafile:
-   ```bash
-   ./mistral-7b-instruct.Q5_K_M.llamafile --port 8080
-   ```
-2. Run translation:
-   ```bash
-   python scripts/translate_site.py --langs es,fr
-   ```
-3. Commit translated content:
-   ```bash
-   git add es/ fr/
-   ```
-
-> Translated files are saved to `/es/`, `/fr/`, etc., and served alongside English content.
+```bash
+python3 scripts/translate_site.py \
+  --config site.json \
+  --langs es,fr \
+  --src content/en \
+  --dest content
 ```
 
-#### 📁 `example/content/scripts/glossary_es.json`  
-→ Language-specific scientific term mappings
+Optional translation settings can be provided in the site config under
+`translation`:
 
+- `provider`
+- `base_url`
+- `model`
+- `api_key`
+- `timeout`
+- `system_prompt`
+
+The translator loads language glossaries from `scripts/glossary_<lang>.json`
+when present.

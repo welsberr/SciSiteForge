@@ -1,0 +1,73 @@
+{
+  "lang": "en",
+  "title": "TalkOrigins Archive: Modernized Preview",
+  "site_title": "TalkOrigins Archive",
+  "license": "CC BY-SA 4.0",
+  "github_url": "https://example.invalid/talkorigins-modern",
+  "contact_email": "admin@example.invalid",
+  "theme": "talkorigins-modern",
+  "languages": [
+    { "code": "en", "name": "English", "coverage": true },
+    { "code": "es", "name": "Español", "coverage": false },
+    { "code": "fr", "name": "Français", "coverage": false },
+    { "code": "pt", "name": "Português", "coverage": false },
+    { "code": "de", "name": "Deutsch", "coverage": false },
+    { "code": "it", "name": "Italiano", "coverage": false },
+    { "code": "ru", "name": "Русский", "coverage": false },
+    { "code": "zh", "name": "中文", "coverage": false },
+    { "code": "ja", "name": "日本語", "coverage": false },
+    { "code": "ar", "name": "العربية", "coverage": false },
+    { "code": "hi", "name": "हिन्दी", "coverage": false }
+  ],
+  "language_policy": {
+    "planned_languages": [
+      { "code": "es", "name": "Español" },
+      { "code": "fr", "name": "Français" },
+      { "code": "pt", "name": "Português" },
+      { "code": "de", "name": "Deutsch" },
+      { "code": "it", "name": "Italiano" },
+      { "code": "ru", "name": "Русский" },
+      { "code": "zh", "name": "中文" },
+      { "code": "ja", "name": "日本語" },
+      { "code": "ar", "name": "العربية" },
+      { "code": "hi", "name": "हिन्दी" }
+    ]
+  },
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Support", "href": "/foundation/2026-update/" },
+    { "label": "Search", "href": "/search/" }
+  ],
+  "hero": {
+    "kicker": "Archive Preview",
+    "title": "A cleaner, more readable TalkOrigins Archive that still feels like the Archive.",
+    "lede": "Use this preset as the proving ground for the www2.talkorigins.org modernization line.",
+    "actions": [
+      { "label": "Open the preview", "href": "/#overview", "primary": true },
+      { "label": "View the framework", "href": "https://example.invalid/scisiteforge", "primary": false }
+    ]
+  },
+  "notebooks": [
+    {
+      "id": "evidence-and-claims",
+      "title": "Evidence and Claims Notebook",
+      "summary": "A reusable study module that can connect stable Archive articles, Index to Creationist Claims entries, guided concepts, and bibliography updates.",
+      "audience": "self-learners, instructors, and board-reviewed site editors",
+      "goals": [
+        "Move from a claim to the relevant evidence and archive context",
+        "Keep stable source material separate from dynamic commentary",
+        "Expose provenance, citations, and review status as first-class study material"
+      ],
+      "apps": [
+        {
+          "title": "Public search",
+          "href": "/search/",
+          "description": "Search across Foundation corpora and the Index to Creationist Claims"
+        }
+      ],
+      "source_kinds": ["section", "notebook", "app", "bibliography"],
+      "max_items": 8
+    }
+  ],
+  "content_sources": {}
+}
