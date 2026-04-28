@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scisiteforge.config import DEFAULT_THEME, load_config, save_config
 from scisiteforge.content import (
     SiteContent,
+    cards_from_config,
     load_citegeist_cards,
     load_didactopus_cards,
     load_doclift_cards,
@@ -57,6 +58,7 @@ def _prompt_for_config() -> dict[str, Any]:
             ],
         },
         "content_sources": {},
+        "content": {},
         "notebooks": [],
     }
 
@@ -144,6 +146,11 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
         site_content.feature_cards.extend(load_didactopus_cards(source))
     if source := content_sources.get("bibliography"):
         site_content.bibliography_entries.extend(load_citegeist_cards(source))
+    inline_content = config.get("content", {})
+    site_content.feature_cards.extend(cards_from_config(inline_content.get("feature_cards", []), default_kind="feature"))
+    site_content.section_cards.extend(cards_from_config(inline_content.get("section_cards", []), default_kind="section"))
+    site_content.app_cards.extend(cards_from_config(inline_content.get("app_cards", []), default_kind="app"))
+    site_content.bibliography_entries.extend(cards_from_config(inline_content.get("bibliography_entries", []), default_kind="bibliography"))
     notebooks = load_notebooks(config)
 
     languages = config.get("languages", [{"code": config.get("lang", "en"), "name": "English", "coverage": True}])

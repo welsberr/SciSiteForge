@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import build
 import translate_site
 
-from scisiteforge.content import SiteContent, load_citegeist_cards, load_didactopus_cards, load_doclift_cards, load_groundrecall_cards
+from scisiteforge.content import SiteContent, cards_from_config, load_citegeist_cards, load_didactopus_cards, load_doclift_cards, load_groundrecall_cards
 from scisiteforge.notebook import load_notebooks, render_notebooks
 from scisiteforge.themes import get_theme, materialize_theme
 from scisiteforge.translations import GenieHiveTranslator, TranslationConfig
@@ -100,6 +100,24 @@ class SciSiteForgeTests(unittest.TestCase):
             self.assertEqual(groundrecall_cards[1].title, "Claim one")
             self.assertEqual(didactopus_cards[0].title, "Prior")
             self.assertEqual(citegeist_cards[0].title, "A Study")
+
+    def test_inline_config_cards_can_seed_example_content(self) -> None:
+        cards = cards_from_config(
+            [
+                {
+                    "title": "Foundation Search",
+                    "body": "Corpus-aware search entry point.",
+                    "href": "/search/",
+                    "meta": "workbench",
+                }
+            ],
+            default_kind="feature",
+        )
+
+        self.assertEqual(cards[0].title, "Foundation Search")
+        self.assertEqual(cards[0].kind, "feature")
+        self.assertEqual(cards[0].href, "/search/")
+        self.assertEqual(cards[0].meta, "workbench")
 
     def test_build_site_renders_selected_theme_and_content(self) -> None:
         from tempfile import TemporaryDirectory

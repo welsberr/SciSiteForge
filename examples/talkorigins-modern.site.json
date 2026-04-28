@@ -2,9 +2,10 @@
   "lang": "en",
   "title": "TalkOrigins Archive: Modernized Preview",
   "site_title": "TalkOrigins Archive",
+  "description": "A SciSiteForge proof-of-concept for the www2.talkorigins.org modernization line.",
   "license": "CC BY-SA 4.0",
-  "github_url": "https://example.invalid/talkorigins-modern",
-  "contact_email": "admin@example.invalid",
+  "github_url": "https://git.cns.fyi/welsberr/talkorigins-modern",
+  "contact_email": "feedback@talkorigins.org",
   "theme": "talkorigins-modern",
   "languages": [
     { "code": "en", "name": "English", "coverage": true },
@@ -41,10 +42,66 @@
   "hero": {
     "kicker": "Archive Preview",
     "title": "A cleaner, more readable TalkOrigins Archive that still feels like the Archive.",
-    "lede": "Use this preset as the proving ground for the www2.talkorigins.org modernization line.",
+    "lede": "Modernization is already underway: stable Archive articles, dynamic sister-site commentary, corpus-aware search, and claim-centered notebooks can coexist without collapsing into a single CMS.",
     "actions": [
       { "label": "Open the preview", "href": "/#overview", "primary": true },
-      { "label": "View the framework", "href": "https://example.invalid/scisiteforge", "primary": false }
+      { "label": "View support update", "href": "/foundation/2026-update/", "primary": false }
+    ]
+  },
+  "content": {
+    "feature_cards": [
+      {
+        "title": "Stable Archive, Modern Access",
+        "body": "The preview keeps the Archive's durable explanatory role while making the reading surface responsive, easier to scan, and easier to route through search.",
+        "href": "/",
+        "meta": "modernization"
+      },
+      {
+        "title": "Foundation Search",
+        "body": "Search can select among TalkOrigins, TalkDesign, Panda's Thumb, Panda's Thumb MT, and the Index to Creationist Claims as separate corpora.",
+        "href": "/search/",
+        "meta": "workbench"
+      },
+      {
+        "title": "Support Update",
+        "body": "The public update explains that modernization is already underway and that the stable Archive/dynamic commentary split is intentional.",
+        "href": "/foundation/2026-update/",
+        "meta": "public proof"
+      }
+    ],
+    "section_cards": [
+      {
+        "title": "Featured FAQ: Misconceptions",
+        "body": "A representative long-form Archive article demonstrates how legacy explanatory material can be presented in the modern theme.",
+        "href": "/faqs/faq-misconceptions/",
+        "meta": "Archive article"
+      },
+      {
+        "title": "Featured Claim: CA100",
+        "body": "A representative Index to Creationist Claims entry shows the claim-centered path into evidence and rebuttal material.",
+        "href": "/indexcc/CA100/",
+        "meta": "Index claim"
+      }
+    ],
+    "bibliography_entries": [
+      {
+        "title": "TalkOrigins Archive",
+        "body": "Stable explanatory articles and FAQs for recurring creation/evolution controversy topics.",
+        "href": "https://www.talkorigins.org/",
+        "meta": "primary corpus"
+      },
+      {
+        "title": "Index to Creationist Claims",
+        "body": "Claim-indexed rebuttal and reference material used as a cross-site search and notebook anchor.",
+        "href": "https://www.talkorigins.org/indexcc/",
+        "meta": "claim index"
+      },
+      {
+        "title": "Panda's Thumb MT Archive",
+        "body": "Definitive corpus for the Movable Type-era Panda's Thumb archive, distinct from the broader scraped corpus.",
+        "href": "https://pandasthumb.net/",
+        "meta": "sister corpus"
+      }
     ]
   },
   "notebooks": [

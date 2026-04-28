@@ -1,4 +1,5 @@
 from .content import (
+    cards_from_config,
     ContentCard,
     SiteContent,
     load_citegeist_cards,

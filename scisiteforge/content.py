@@ -28,6 +28,25 @@ class SiteContent:
     notes: list[str] = field(default_factory=list)
 
 
+def cards_from_config(items: list[dict[str, Any]], *, default_kind: str) -> list[ContentCard]:
+    cards: list[ContentCard] = []
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        title = str(item.get("title") or item.get("name") or "Item")
+        cards.append(
+            ContentCard(
+                title=title,
+                body=str(item.get("body") or item.get("description") or item.get("summary") or ""),
+                href=str(item.get("href") or item.get("url") or ""),
+                meta=str(item.get("meta") or item.get("kind") or default_kind),
+                kind=str(item.get("kind") or default_kind),
+                source=str(item.get("source") or item.get("id") or title.lower().replace(" ", "-")),
+            )
+        )
+    return cards
+
+
 def _first_paragraph(text: str) -> str:
     paragraphs = [chunk.strip() for chunk in re.split(r"\n\s*\n", text) if chunk.strip()]
     return paragraphs[0] if paragraphs else text.strip()
