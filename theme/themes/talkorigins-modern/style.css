@@ -12,7 +12,8 @@
   --gold: #b18d33;
   --gold-soft: #f3e4b3;
   --brick-soft: #efe1dc;
-  --shadow: 0 22px 55px rgba(20, 33, 53, 0.1);
+  --shadow: 0 18px 42px rgba(20, 33, 53, 0.09);
+  --card-shadow: 0 8px 20px rgba(20, 33, 53, 0.06);
   --max-width: 1180px;
   --article-width: 760px;
 }
@@ -71,13 +72,19 @@ a:hover {
 .article-body,
 .side-card,
 .site-footer,
-.continuity-note,
-.feature-card,
-.section-card {
+.continuity-note {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 22px;
   box-shadow: var(--shadow);
+}
+
+.feature-card,
+.section-card {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
 }
 
 .site-header,
@@ -165,10 +172,12 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: center;
 }
 
 .top-nav a,
-.button-link {
+.button-link,
+.top-nav select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -181,9 +190,14 @@ a:hover {
 }
 
 .top-nav a,
-.button-link.button-link-secondary {
+.button-link.button-link-secondary,
+.top-nav select {
   background: rgba(255, 255, 255, 0.82);
   color: var(--ink);
+}
+
+.top-nav select {
+  font: 600 0.95rem/1.2 "Helvetica Neue", Arial, sans-serif;
 }
 
 .button-link,
@@ -292,6 +306,12 @@ a:hover {
   border-top: 5px solid rgba(177, 141, 51, 0.45);
 }
 
+.resources-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 252, 0.96));
+  border-top: 5px solid rgba(33, 79, 148, 0.34);
+}
+
 .preview-panel {
   background:
     linear-gradient(180deg, rgba(244, 248, 252, 0.92), rgba(255, 255, 255, 0.96));
@@ -333,6 +353,15 @@ a:hover {
   height: 4px;
   background: var(--gold);
   opacity: 0.85;
+}
+
+.feature-card .button-link,
+.section-card .button-link {
+  min-height: 38px;
+  margin-top: 0.45rem;
+  padding: 0.55rem 0.78rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
 }
 
 .lead-panel .feature-card:nth-child(4n + 1),
@@ -525,11 +554,13 @@ a:hover {
 }
 
 .notebook-panel {
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid rgba(22, 54, 89, 0.14);
+  border-left: 5px solid var(--blue);
+  border-radius: 12px;
   padding: 1.25rem;
   margin: 1rem 0 1.5rem;
-  background: rgba(255, 255, 255, 0.84);
+  background:
+    linear-gradient(180deg, rgba(244, 248, 252, 0.9), rgba(255, 255, 255, 0.86));
 }
 
 .notebook-panel h2,
@@ -554,6 +585,24 @@ a:hover {
 
 .plain-list li + li {
   margin-top: 0.5rem;
+}
+
+.roadmap-list,
+.bibliography-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.roadmap-list li + li,
+.bibliography-list li + li {
+  margin-top: 0.9rem;
+}
+
+.roadmap-list p {
+  max-width: 72ch;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 a:focus-visible,

@@ -69,6 +69,8 @@ def _language_options_html(languages: list[dict[str, str]], current_lang: str) -
         for item in languages
         if item.get("coverage", True) or item.get("code") == current_lang
     ]
+    if len(visible_languages) <= 1:
+        return ""
     return "\n".join(
         f'<option value="{html_escape(item["code"])}" {"selected" if item["code"] == current_lang else ""}>{html_escape(item["name"])}</option>'
         for item in visible_languages
@@ -83,6 +85,41 @@ def _language_policy_html(language_policy: dict[str, Any]) -> str:
     if not planned_names:
         return ""
     return f'<p class="language-policy-note">Planned languages: {planned_names}</p>'
+
+
+def _roadmap_html(roadmap: list[dict[str, Any]], language_policy: dict[str, Any]) -> str:
+    items = []
+    for item in roadmap:
+        if not isinstance(item, dict):
+            continue
+        title = html_escape(item.get("title", "Roadmap item"))
+        body = html_escape(item.get("body", ""))
+        status = html_escape(item.get("status", "Planned"))
+        items.append(f'<li><strong>{title}</strong> <span class="meta">{status}</span><p>{body}</p></li>')
+    planned_languages = language_policy.get("planned_languages", [])
+    planned_names = ", ".join(
+        html_escape(item.get("name", item.get("code", "")))
+        for item in planned_languages
+        if isinstance(item, dict) and (item.get("name") or item.get("code"))
+    )
+    if planned_names:
+        items.append(
+            '<li><strong>Multilingual access</strong> <span class="meta">Planned</span>'
+            f'<p>Language options will appear only when reviewed coverage exists. Target languages under consideration: {planned_names}.</p></li>'
+        )
+    if not items:
+        return ""
+    return '<ul class="roadmap-list">' + "\n".join(items) + "</ul>"
+
+
+def _language_selector_html(language_options: str) -> str:
+    if not language_options:
+        return ""
+    return (
+        '<select id="lang-switch" aria-label="Language" onchange="switchLanguage(this.value)">'
+        f"{language_options}"
+        "</select>"
+    )
 
 
 def _hero_actions_html(actions: list[dict[str, Any]]) -> str:
@@ -120,7 +157,7 @@ def _render_cards(cards: list, template_path: str | Path, lang: str) -> str:
                     "section_excerpt": html_escape(card.body),
                     "section_path": html_escape(card.source or card.title.lower().replace(" ", "-")),
                     "href": html_escape(card.href),
-                    "link_label": "Open",
+                    "link_label": html_escape(card.link_label),
                 },
             )
         )
@@ -175,6 +212,7 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
         "page_class": html_escape(theme.page_class),
         "navigation_html": _navigation_html(config.get("navigation", [])),
         "language_options": _language_options_html(languages, config.get("lang", "en")),
+        "language_selector_html": _language_selector_html(_language_options_html(languages, config.get("lang", "en"))),
         "language_policy_html": _language_policy_html(language_policy),
         "hero_kicker": html_escape(hero.get("kicker", theme.display_name)),
         "hero_title": html_escape(hero.get("title", config.get("title", ""))),
@@ -188,6 +226,7 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
             for card in site_content.bibliography_entries
         ),
         "notebook_html": render_notebooks(notebooks, site_content),
+        "roadmap_html": _roadmap_html(config.get("roadmap", []), language_policy),
     }
     page_context.update(
         {

@@ -2,7 +2,7 @@
   "lang": "en",
   "title": "TalkOrigins Archive: Modernized Preview",
   "site_title": "TalkOrigins Archive",
-  "description": "A SciSiteForge proof-of-concept for the www2.talkorigins.org modernization line.",
+  "description": "A SciSiteForge proof-of-concept for poc1.talkorigins.org and the TalkOrigins Archive modernization line.",
   "license": "CC BY-SA 4.0",
   "github_url": "https://git.cns.fyi/welsberr/talkorigins-modern",
   "contact_email": "feedback@talkorigins.org",
@@ -35,52 +35,59 @@
     ]
   },
   "navigation": [
-    { "label": "Home", "href": "/" },
-    { "label": "Support", "href": "/foundation/2026-update/" },
-    { "label": "Search", "href": "/search/" }
+    { "label": "Start Here", "href": "#start" },
+    { "label": "Key Resources", "href": "#resources" },
+    { "label": "Search", "href": "https://www.talkorigins.org/search/" },
+    { "label": "Roadmap", "href": "#roadmap" },
+    { "label": "Support", "href": "#roadmap" }
   ],
   "hero": {
     "kicker": "Archive Preview",
-    "title": "A cleaner, more readable TalkOrigins Archive that still feels like the Archive.",
-    "lede": "Modernization is already underway: stable Archive articles, dynamic sister-site commentary, corpus-aware search, and claim-centered notebooks can coexist without collapsing into a single CMS.",
+    "title": "A clearer front door for the TalkOrigins Archive.",
+    "lede": "The modernization work keeps the Archive's stable reference role while making it easier for a first-time reader to find explanations, claims, search tools, and sister Foundation resources.",
     "actions": [
-      { "label": "Open the preview", "href": "/#overview", "primary": true },
-      { "label": "View support update", "href": "/foundation/2026-update/", "primary": false }
+      { "label": "Start with the overview", "href": "#start", "primary": true },
+      { "label": "See the roadmap", "href": "#roadmap", "primary": false }
     ]
   },
   "content": {
     "feature_cards": [
       {
-        "title": "Stable Archive, Modern Access",
-        "body": "The preview keeps the Archive's durable explanatory role while making the reading surface responsive, easier to scan, and easier to route through search.",
-        "href": "/",
-        "meta": "modernization"
+        "title": "New to the topic?",
+        "body": "Start with readable explanations that separate the scientific issues from the rhetoric around them.",
+        "href": "https://www.talkorigins.org/faqs/faq-misconceptions.html",
+        "meta": "Archive guide",
+        "link_label": "Read a sample FAQ"
       },
       {
-        "title": "Foundation Search",
-        "body": "Search can select among TalkOrigins, TalkDesign, Panda's Thumb, Panda's Thumb MT, and the Index to Creationist Claims as separate corpora.",
-        "href": "/search/",
-        "meta": "workbench"
+        "title": "Looking for a specific claim?",
+        "body": "The Index to Creationist Claims gives readers a direct path from a familiar claim to a response and references.",
+        "href": "https://www.talkorigins.org/indexcc/",
+        "meta": "Claim index",
+        "link_label": "Open the Index"
       },
       {
-        "title": "Support Update",
-        "body": "The public update explains that modernization is already underway and that the stable Archive/dynamic commentary split is intentional.",
-        "href": "/foundation/2026-update/",
-        "meta": "public proof"
+        "title": "Searching across Foundation sites?",
+        "body": "Foundation search keeps TalkOrigins, TalkDesign, Panda's Thumb, Panda's Thumb MT, and the claim index as distinct selectable corpora.",
+        "href": "https://www.talkorigins.org/search/",
+        "meta": "Search",
+        "link_label": "Search the sites"
       }
     ],
     "section_cards": [
       {
         "title": "Featured FAQ: Misconceptions",
         "body": "A representative long-form Archive article demonstrates how legacy explanatory material can be presented in the modern theme.",
-        "href": "/faqs/faq-misconceptions/",
-        "meta": "Archive article"
+        "href": "https://www.talkorigins.org/faqs/faq-misconceptions.html",
+        "meta": "Archive article",
+        "link_label": "Read the FAQ"
       },
       {
         "title": "Featured Claim: CA100",
         "body": "A representative Index to Creationist Claims entry shows the claim-centered path into evidence and rebuttal material.",
-        "href": "/indexcc/CA100/",
-        "meta": "Index claim"
+        "href": "https://www.talkorigins.org/indexcc/CA/CA100.html",
+        "meta": "Index claim",
+        "link_label": "Read the claim entry"
       }
     ],
     "bibliography_entries": [
@@ -107,23 +114,45 @@
   "notebooks": [
     {
       "id": "evidence-and-claims",
-      "title": "Evidence and Claims Notebook",
-      "summary": "A reusable study module that can connect stable Archive articles, Index to Creationist Claims entries, guided concepts, and bibliography updates.",
-      "audience": "self-learners, instructors, and board-reviewed site editors",
+      "title": "Evidence and Claims Reading Path",
+      "summary": "A guided path can connect stable Archive articles, Index to Creationist Claims entries, search results, and bibliography updates without hiding where each source came from.",
+      "audience": "interested lay readers, instructors, and site editors",
       "goals": [
         "Move from a claim to the relevant evidence and archive context",
         "Keep stable source material separate from dynamic commentary",
-        "Expose provenance, citations, and review status as first-class study material"
+        "Show provenance, citations, and review status as part of the reading experience"
       ],
       "apps": [
         {
           "title": "Public search",
-          "href": "/search/",
+          "href": "https://www.talkorigins.org/search/",
           "description": "Search across Foundation corpora and the Index to Creationist Claims"
         }
       ],
       "source_kinds": ["section", "notebook", "app", "bibliography"],
       "max_items": 8
+    }
+  ],
+  "roadmap": [
+    {
+      "title": "Replace the preview placeholders with real Archive pages",
+      "status": "Next",
+      "body": "Use the modernization theme on selected high-value FAQs and claim pages so readers can evaluate actual content, not just a shell."
+    },
+    {
+      "title": "Promote corpus-aware Foundation search",
+      "status": "Next",
+      "body": "Make search visible from each Foundation-associated domain with Index and local-domain corpora selected by default."
+    },
+    {
+      "title": "Connect support messaging to visible modernization work",
+      "status": "Planned",
+      "body": "Use the proof-of-concept site to show that the Archive is being actively maintained while preserving the stable Archive and dynamic commentary split."
+    },
+    {
+      "title": "Add guided reading paths",
+      "status": "Planned",
+      "body": "Generalize the notebook pattern into reader-friendly paths that help users move from questions, claims, and classroom needs to reliable Archive material."
     }
   ],
   "content_sources": {}

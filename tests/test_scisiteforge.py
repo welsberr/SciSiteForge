@@ -109,6 +109,7 @@ class SciSiteForgeTests(unittest.TestCase):
                     "body": "Corpus-aware search entry point.",
                     "href": "/search/",
                     "meta": "workbench",
+                    "link_label": "Search",
                 }
             ],
             default_kind="feature",
@@ -118,6 +119,7 @@ class SciSiteForgeTests(unittest.TestCase):
         self.assertEqual(cards[0].kind, "feature")
         self.assertEqual(cards[0].href, "/search/")
         self.assertEqual(cards[0].meta, "workbench")
+        self.assertEqual(cards[0].link_label, "Search")
 
     def test_build_site_renders_selected_theme_and_content(self) -> None:
         from tempfile import TemporaryDirectory
@@ -236,10 +238,11 @@ class SciSiteForgeTests(unittest.TestCase):
             build.build_site(config_path, out_dir)
 
             html = (out_dir / "index.html").read_text(encoding="utf-8")
-            self.assertIn('<option value="en" selected>English</option>', html)
+            self.assertNotIn('<select id="lang-switch"', html)
             self.assertNotIn('value="es"', html)
             self.assertNotIn('value="fr"', html)
-            self.assertIn("Planned languages: Español, Français", html)
+            self.assertIn("Multilingual access", html)
+            self.assertIn("Target languages under consideration: Español, Français", html)
 
     def test_notebook_pattern_groups_goals_apps_and_source_cards(self) -> None:
         from tempfile import TemporaryDirectory

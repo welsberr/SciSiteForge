@@ -17,6 +17,7 @@ class ContentCard:
     meta: str = ""
     kind: str = "feature"
     source: str = ""
+    link_label: str = "Read More"
 
 
 @dataclass(slots=True)
@@ -42,6 +43,7 @@ def cards_from_config(items: list[dict[str, Any]], *, default_kind: str) -> list
                 meta=str(item.get("meta") or item.get("kind") or default_kind),
                 kind=str(item.get("kind") or default_kind),
                 source=str(item.get("source") or item.get("id") or title.lower().replace(" ", "-")),
+                link_label=str(item.get("link_label") or item.get("label") or "Read More"),
             )
         )
     return cards

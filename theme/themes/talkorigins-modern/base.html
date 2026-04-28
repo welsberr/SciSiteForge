@@ -27,10 +27,7 @@
       </div>
       <nav class="top-nav" aria-label="Primary navigation">
         {{ navigation_html }}
-        <select id="lang-switch" onchange="switchLanguage(this.value)">
-          {{ language_options }}
-        </select>
-        {{ language_policy_html }}
+        {{ language_selector_html }}
       </nav>
     </header>
 
@@ -46,27 +43,27 @@
             </div>
           </div>
           <div class="continuity-note hero-note">
-            <p class="eyebrow">Framework</p>
-            <h2>Modular, static, and reviewable</h2>
-            <p>This theme is intended to prove the modernization line without giving up the archive posture.</p>
+            <p class="eyebrow">What This Is</p>
+            <h2>A preview of a working modernization path</h2>
+            <p>The Archive remains a stable reference library. The redesign makes that library easier to read, search, and connect to sister Foundation resources.</p>
             <ul class="link-list compact-list">
-              <li>Responsive reading</li>
-              <li>Reusable content blocks</li>
-              <li>Search and bibliography ready</li>
+              <li>Stable explanatory articles</li>
+              <li>Claim-centered entry points</li>
+              <li>Search across Foundation corpora</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section class="content-panel">
-        <h2>Feature cards</h2>
+      <section id="start" class="content-panel lead-panel">
+        <h2>Start Here</h2>
         <div class="feature-grid">
           {{ feature_cards_html }}
         </div>
       </section>
 
-      <section class="content-panel">
-        <h2>Notebook and app content</h2>
+      <section id="resources" class="content-panel resources-panel">
+        <h2>Key Resources</h2>
         {{ notebook_html }}
         <div class="section-grid">
           {{ section_cards_html }}
@@ -74,11 +71,16 @@
         </div>
       </section>
 
-      <section class="content-panel">
-        <h2>Bibliography</h2>
+      <section id="references" class="content-panel">
+        <h2>Reference Context</h2>
         <ul class="archive-list bibliography-list">
           {{ bibliography_html }}
         </ul>
+      </section>
+
+      <section id="roadmap" class="content-panel roadmap-panel">
+        <h2>Roadmap</h2>
+        {{ roadmap_html }}
       </section>
     </main>
 
