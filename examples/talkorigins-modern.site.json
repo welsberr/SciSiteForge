@@ -36,7 +36,7 @@
   },
   "translation": {
     "provider": "geniehive",
-    "base_url": "http://127.0.0.1:8800",
+    "base_url": "http://172.24.50.65:8800",
     "model": "scientific_translator",
     "api_key": "change-me-client-key",
     "timeout": 120,

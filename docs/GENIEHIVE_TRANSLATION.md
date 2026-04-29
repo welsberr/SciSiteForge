@@ -19,7 +19,7 @@ site config:
 {
   "translation": {
     "provider": "geniehive",
-    "base_url": "http://127.0.0.1:8800",
+    "base_url": "http://172.24.50.65:8800",
     "model": "scientific_translator",
     "api_key": "change-me-client-key",
     "timeout": 120,
@@ -30,7 +30,7 @@ site config:
 
 Recommended meaning of the fields:
 
-- `base_url`: GenieHive control-plane URL or a reverse-proxied client URL.
+- `base_url`: GenieHive control-plane URL or a reverse-proxied client URL. For the TalkOrigins proof-of-concept from `bwng.us`, use `http://172.24.50.65:8800`.
 - `provider`: translation backend. The supported provider is currently
   `geniehive`.
 - `model`: a GenieHive role ID or directly addressable model name.
@@ -94,6 +94,12 @@ For local development:
 - `base_url`: `http://127.0.0.1:8800`
 - `model`: a translation-focused GenieHive role
 - `timeout`: `120`
+
+For the current ZeroTier-backed TalkOrigins proof-of-concept:
+
+- `base_url`: `http://172.24.50.65:8800`
+- `model`: `scientific_translator`
+- `api_key`: `change-me-client-key`
 
 For production or a LAN host:
 
