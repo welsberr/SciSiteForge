@@ -37,9 +37,9 @@
   "navigation": [
     { "label": "Start Here", "href": "#start" },
     { "label": "Key Resources", "href": "#resources" },
-    { "label": "Search", "href": "https://www.talkorigins.org/search/" },
+    { "label": "Search", "href": "/search/" },
     { "label": "Roadmap", "href": "#roadmap" },
-    { "label": "Support", "href": "#roadmap" }
+    { "label": "Support", "href": "/foundation/2026-update/" }
   ],
   "hero": {
     "kicker": "Archive Preview",
@@ -47,7 +47,7 @@
     "lede": "The modernization work keeps the Archive's stable reference role while making it easier for a first-time reader to find explanations, claims, search tools, and sister Foundation resources.",
     "actions": [
       { "label": "Start with the overview", "href": "#start", "primary": true },
-      { "label": "See the roadmap", "href": "#roadmap", "primary": false }
+      { "label": "View the support update", "href": "/foundation/2026-update/", "primary": false }
     ]
   },
   "content": {
@@ -55,21 +55,21 @@
       {
         "title": "New to the topic?",
         "body": "Start with readable explanations that separate the scientific issues from the rhetoric around them.",
-        "href": "https://www.talkorigins.org/faqs/faq-misconceptions.html",
+        "href": "/faqs/faq-misconceptions/",
         "meta": "Archive guide",
         "link_label": "Read a sample FAQ"
       },
       {
         "title": "Looking for a specific claim?",
         "body": "The Index to Creationist Claims gives readers a direct path from a familiar claim to a response and references.",
-        "href": "https://www.talkorigins.org/indexcc/",
+        "href": "/indexcc/CA100/",
         "meta": "Claim index",
         "link_label": "Open the Index"
       },
       {
         "title": "Searching across Foundation sites?",
         "body": "Foundation search keeps TalkOrigins, TalkDesign, Panda's Thumb, Panda's Thumb MT, and the claim index as distinct selectable corpora.",
-        "href": "https://www.talkorigins.org/search/",
+        "href": "/search/",
         "meta": "Search",
         "link_label": "Search the sites"
       }
@@ -78,14 +78,14 @@
       {
         "title": "Featured FAQ: Misconceptions",
         "body": "A representative long-form Archive article demonstrates how legacy explanatory material can be presented in the modern theme.",
-        "href": "https://www.talkorigins.org/faqs/faq-misconceptions.html",
+        "href": "/faqs/faq-misconceptions/",
         "meta": "Archive article",
         "link_label": "Read the FAQ"
       },
       {
         "title": "Featured Claim: CA100",
         "body": "A representative Index to Creationist Claims entry shows the claim-centered path into evidence and rebuttal material.",
-        "href": "https://www.talkorigins.org/indexcc/CA/CA100.html",
+        "href": "/indexcc/CA100/",
         "meta": "Index claim",
         "link_label": "Read the claim entry"
       }
@@ -125,7 +125,7 @@
       "apps": [
         {
           "title": "Public search",
-          "href": "https://www.talkorigins.org/search/",
+          "href": "/search/",
           "description": "Search across Foundation corpora and the Index to Creationist Claims"
         }
       ],
@@ -148,6 +148,11 @@
       "title": "Connect support messaging to visible modernization work",
       "status": "Planned",
       "body": "Use the proof-of-concept site to show that the Archive is being actively maintained while preserving the stable Archive and dynamic commentary split."
+    },
+    {
+      "title": "Preserve legacy TalkOrigins URLs",
+      "status": "Architecture",
+      "body": "For this long-running Archive, English content should remain reachable at root paths such as /faqs/ and /indexcc/. Future language variants can live under language-code paths while the original English URLs continue to resolve."
     },
     {
       "title": "Add guided reading paths",
