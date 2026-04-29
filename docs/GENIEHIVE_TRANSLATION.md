@@ -34,7 +34,7 @@ Recommended meaning of the fields:
 - `provider`: translation backend. The supported provider is currently
   `geniehive`.
 - `model`: a GenieHive role ID or directly addressable model name.
-- `api_key`: the GenieHive client key.
+- `api_key`: the GenieHive client key, sent as the `X-Api-Key` request header.
 - `timeout`: request timeout in seconds.
 - `system_prompt`: the translation policy for the client.
 

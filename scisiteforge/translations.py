@@ -60,7 +60,7 @@ class GenieHiveTranslator:
         data = json.dumps(payload).encode("utf-8")
         headers = {"Content-Type": "application/json"}
         if self.config.api_key:
-            headers["Authorization"] = f"Bearer {self.config.api_key}"
+            headers["X-Api-Key"] = self.config.api_key
         req = request.Request(url, data=data, headers=headers, method="POST")
         try:
             with request.urlopen(req, timeout=self.config.timeout) as resp:

@@ -34,6 +34,14 @@
       { "code": "hi", "name": "हिन्दी" }
     ]
   },
+  "translation": {
+    "provider": "geniehive",
+    "base_url": "http://127.0.0.1:8800",
+    "model": "scientific_translator",
+    "api_key": "change-me-client-key",
+    "timeout": 120,
+    "system_prompt": "You are a careful scientific translator. Preserve meaning, structure, citations, and technical terms. Return only the translation."
+  },
   "navigation": [
     { "label": "Start Here", "href": "#start" },
     { "label": "Key Resources", "href": "#resources" },

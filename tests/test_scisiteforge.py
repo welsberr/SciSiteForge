@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 import sys
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -312,6 +313,34 @@ class SciSiteForgeTests(unittest.TestCase):
         user_text = payload["messages"][1]["content"]
         self.assertIn("Spanish", user_text)
         self.assertIn("evolución", user_text)
+
+    def test_geniehive_translator_uses_geniehive_api_key_header(self) -> None:
+        translator = GenieHiveTranslator(
+            TranslationConfig(base_url="http://geniehive.local:8800", model="translation-role", api_key="abc123")
+        )
+        captured: dict[str, object] = {}
+
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def read(self):
+                return b'{"choices":[{"message":{"content":"Hola"}}]}'
+
+        def fake_urlopen(req, timeout):
+            captured["headers"] = dict(req.header_items())
+            captured["timeout"] = timeout
+            return FakeResponse()
+
+        with patch("scisiteforge.translations.request.urlopen", fake_urlopen):
+            self.assertEqual(translator.translate("Hello", "Spanish"), "Hola")
+
+        headers = captured["headers"]
+        self.assertEqual(headers["X-api-key"], "abc123")
+        self.assertNotIn("Authorization", headers)
 
     def test_translate_site_builds_translator_from_config(self) -> None:
         from tempfile import TemporaryDirectory
