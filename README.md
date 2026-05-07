@@ -19,6 +19,9 @@ This repository provides a reusable foundation for sites like **evo-edu.org**, `
 - A generic notebook pattern for topic-level study modules that combine goals,
   apps, source-derived sections, and bibliographies. See
   [docs/NOTEBOOKS.md](docs/NOTEBOOKS.md)
+- TalkOrigins Foundation Notebook planning for static review surfaces over
+  GroundRecall, doclift, Didactopus, CiteGeist, and wolfe artifacts. See
+  [docs/FOUNDATION_NOTEBOOK.md](docs/FOUNDATION_NOTEBOOK.md)
 - Optional translation tooling can use local GenieHive LLM endpoints. See
   [docs/GENIEHIVE_TRANSLATION.md](docs/GENIEHIVE_TRANSLATION.md)
 
