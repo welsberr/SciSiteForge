@@ -1,5 +1,11 @@
 # SciSiteForge Scripts
 
+For a real public site, read `docs/ADOPTION_GUIDE.md` before using these
+scripts. The build scripts assume the site repo already has a source inventory,
+public/private boundary decisions, Notebook plan, language policy, and route
+policy. Skipping that preparation usually produces a site shell without a
+maintainable content model.
+
 ## Build
 
 Initialize a site config:
@@ -14,6 +20,15 @@ Build a site:
 ```bash
 python3 scripts/build.py --config site.json --output /tmp/scisiteforge-site
 ```
+
+Build all shipped example configs:
+
+```bash
+python3 scripts/build_examples.py
+```
+
+That writes example outputs under `examples/_build/` by default and runs the
+normal framework regression surface for each example bundle.
 
 The shipped theme presets are:
 

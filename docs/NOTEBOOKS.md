@@ -3,6 +3,11 @@
 A SciSiteForge notebook is a topic-level study module. It is smaller than a
 full learner application and more structured than a list of cards.
 
+For public-facing reader experience patterns, see
+[docs/NOTEBOOK_UX.md](NOTEBOOK_UX.md).
+For the expandable graph and maturity model behind incomplete-but-usable
+Notebook coverage, see [docs/NOTEBOOK_GRAPH.md](NOTEBOOK_GRAPH.md).
+
 Use a notebook when a site needs to connect:
 
 - a concept or claim

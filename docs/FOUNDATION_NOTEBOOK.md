@@ -5,6 +5,13 @@ TalkOrigins Foundation sites. It should not become a new canonical knowledge
 store. SciSiteForge should render static notebook pages from artifacts produced
 by the adjacent tools.
 
+For the graph-backed maturity model that allows the Notebook to be useful
+before complete domain coverage exists, see
+[docs/NOTEBOOK_GRAPH.md](NOTEBOOK_GRAPH.md).
+For the recommended procedure for seeding a broader Foundation Notebook from
+the `evo-edu` core without creating unmanaged forks, see
+[docs/NOTEBOOK_SEEDING.md](NOTEBOOK_SEEDING.md).
+
 ## Roles
 
 - `doclift`: normalize legacy documents and produce deterministic source
@@ -28,6 +35,38 @@ assets wherever possible. Runtime services should be limited to features that
 need them, such as public search. Privileged research, full corpora, review
 queues, and generated graph evidence should remain on the development host or
 other non-public infrastructure.
+
+## Public Release Safety
+
+Notebook publication should be deny-by-default. Public bundles may contain
+reviewed learning pages, reviewed scaffold data, public citations, source
+summaries, and short attributed quotations where a review record justifies the
+use. They must not contain raw source extraction or private review state.
+
+Exclude these from public artifacts:
+
+- staging claims, draft examples, and draft questions
+- raw OCR, local scan output, source-text dumps, and extraction chunks
+- local filesystem paths and local scan/OCR locators
+- model prompts, model logs, batch generation traces, and intermediate drafts
+- unresolved source-slot analysis, review queues, and workbench state
+- learner account/session state, mastery ledgers, and private mentor logs
+
+For records derived from copyrighted source material, require source-use review
+metadata before promotion:
+
+- copyright/licensing status when known
+- source citation and canonical source ID
+- whether the public text is summary, paraphrase, or quotation
+- verbatim quotation word count
+- transformation/relevance rationale
+- market-substitution risk note
+- reviewer and review date
+
+SciSiteForge deployments should enforce this boundary mechanically. Public
+artifact exporters should allowlist reviewed Notebook paths, deny known private
+paths, and fail the export when public Notebook files contain raw OCR/source
+markers or local path markers.
 
 ## Artifact Inputs
 

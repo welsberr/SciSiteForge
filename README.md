@@ -3,10 +3,16 @@
 A lightweight, responsive, static-site framework for open educational resources in science.
 
 ## 🎯 Purpose
-This repository provides a reusable foundation for sites like **evo-edu.org**, `www2.talkorigins.org`, and `pandasthumb.net`, featuring:
+This repository provides a reusable foundation for science, education, and
+public-knowledge sites. It is being proven through sites such as
+**evo-edu.org**, `talkorigins.org`, `talkdesign.org`, `evolutionnews.net`, and
+`pandasthumb.net`, but the framework is intended for broader reuse, featuring:
 - Mobile-first responsive design
 - Modular content loading (HTML fragments)
-- Language-switching support for multilingual static trees
+- Language-switching support for multilingual static trees, including visible planned-language options and fallback behavior when translations are still pending
+- Public search, workbench, feedback, bibliography, portable static build, and
+  Notebook patterns that can be implemented in site repos while sharing the
+  SciSiteForge shell conventions
 - Integrated app-card and notebook-section templates
   - Intended to host JavaScript web apps
     -- With study guides, alignment documents, reading (links to notebook sections)
@@ -19,15 +25,36 @@ This repository provides a reusable foundation for sites like **evo-edu.org**, `
 - A generic notebook pattern for topic-level study modules that combine goals,
   apps, source-derived sections, and bibliographies. See
   [docs/NOTEBOOKS.md](docs/NOTEBOOKS.md)
+- Recommended public-facing Notebook UX patterns for beginner routes, concept
+  pages, learning-path presentation, and trust/status cues. See
+  [docs/NOTEBOOK_UX.md](docs/NOTEBOOK_UX.md)
+- Recommended graph maturity model for expandable Notebook coverage across
+  evolving domains. See [docs/NOTEBOOK_GRAPH.md](docs/NOTEBOOK_GRAPH.md)
+- Recommended seeding/synchronization model for cloning the `evo-edu` Notebook
+  into broader Foundation Notebook work. See
+  [docs/NOTEBOOK_SEEDING.md](docs/NOTEBOOK_SEEDING.md)
+- Recommended repo boundary and lifecycle model for framework-versus-site
+  ownership. See [docs/SITE_REPOS.md](docs/SITE_REPOS.md)
+- TalkDesign sister-site migration plan following the `talkorigins-modern`
+  poc3 modernization pattern. See
+  [docs/TALKDESIGN_MIGRATION_PLAN.md](docs/TALKDESIGN_MIGRATION_PLAN.md)
 - TalkOrigins Foundation Notebook planning for static review surfaces over
   GroundRecall, doclift, Didactopus, CiteGeist, and wolfe artifacts. See
   [docs/FOUNDATION_NOTEBOOK.md](docs/FOUNDATION_NOTEBOOK.md)
+- New-project orientation for maintainers who need to prepare source material,
+  configure Notebook early, and decide which features belong in a site repo.
+  See [docs/ADOPTION_GUIDE.md](docs/ADOPTION_GUIDE.md)
+- Blog-to-archive publication model for projects that need dated posts and
+  stable knowledge-graph-backed topic pages. See
+  [docs/BLOG_ARCHIVE_PATTERN.md](docs/BLOG_ARCHIVE_PATTERN.md)
 - Public-surface guardrails for scoped updates, canonical metadata, JSON-LD,
   search corpora, bibliography preservation, portable builds, performance
   checks, and archive/status separation. See
   [docs/PUBLIC_SURFACE_GUARDRAILS.md](docs/PUBLIC_SURFACE_GUARDRAILS.md)
 - Optional translation tooling can use local GenieHive LLM endpoints. See
   [docs/GENIEHIVE_TRANSLATION.md](docs/GENIEHIVE_TRANSLATION.md)
+- Framework-generated translation queue and status pages under `translation-status/`
+- Framework-generated build regression reports under `build/site_regression_report.{json,md}`
 
 ## 🛠️ Features
 - Vanilla HTML/CSS/JS (no heavy frameworks)
@@ -51,10 +78,31 @@ This repository provides a reusable foundation for sites like **evo-edu.org**, `
 ```
 
 ## 🧩 How to Use
-1. Clone this repo
-2. Choose a theme preset and optional content sources in `site.json`
-3. Build with `scripts/build.py`
-4. Use `main.js` for dynamic section loading and language switching
+1. Read [docs/ADOPTION_GUIDE.md](docs/ADOPTION_GUIDE.md) before starting a real site.
+2. Create a site repo and source-content inventory.
+3. Choose a theme preset and optional content sources in `site.json`.
+4. Provision Notebook manifests early so source review, search, bibliography,
+   translation, and reader paths are coordinated.
+5. Build with `scripts/build.py`.
+6. Use `main.js` for dynamic section loading and language switching.
+
+Example configs:
+- [examples/talkorigins-modern.site.json](examples/talkorigins-modern.site.json)
+- [examples/evo-edu-notebook.site.json](examples/evo-edu-notebook.site.json)
+
+Build all shipped examples with:
+
+```bash
+python3 scripts/build_examples.py
+```
+
+Build output now includes, when configured:
+- `index.html`
+- `notebook/index.html` for notebook-mode study surfaces
+- `translation-status/index.html`
+- `translation-status/queue.json`
+- `build/site_regression_report.json`
+- `build/site_regression_report.md`
 
 > Use the `talkorigins-modern` preset as the proving ground for the
 > `www2.talkorigins.org` modernization line.
@@ -91,9 +139,12 @@ address.
 
 The other major feature here is the architecture to support multiple
 languages. The core framework can present static language trees and switch
-between covered locales without requiring a translation backend. Optional
-translation tooling can use locally-hosted multilingual large language models
-routed through GenieHive; see
+between covered locales without requiring a translation backend. Planned
+languages can remain visible in the shared site shell, while untranslated
+pages fall back to the default language together with a translation-status
+queue that makes the pending work explicit. Optional translation tooling can
+use locally-hosted multilingual large language models routed through
+GenieHive; see
 [docs/GENIEHIVE_TRANSLATION.md](docs/GENIEHIVE_TRANSLATION.md) for that
 separate client-side configuration.
 
