@@ -1,0 +1,141 @@
+{
+  "lang": "en",
+  "title": "Evolution Education Notebook Preview",
+  "site_title": "Evolution Education",
+  "description": "A SciSiteForge notebook-mode example for beginner-facing concept study, guided routes, multilingual visibility, and source-aware learning surfaces.",
+  "license": "CC BY-SA 4.0",
+  "github_url": "https://example.invalid/evo-edu",
+  "contact_email": "editor@example.invalid",
+  "theme": "evo-edu",
+  "languages": [
+    { "code": "en", "name": "English", "coverage": true },
+    { "code": "es", "name": "Español", "coverage": false },
+    { "code": "fr", "name": "Français", "coverage": false },
+    { "code": "de", "name": "Deutsch", "coverage": false },
+    { "code": "pt", "name": "Português", "coverage": false }
+  ],
+  "language_policy": {
+    "planned_languages": [
+      { "code": "es", "name": "Español" },
+      { "code": "fr", "name": "Français" },
+      { "code": "de", "name": "Deutsch" },
+      { "code": "pt", "name": "Português" }
+    ]
+  },
+  "navigation": [
+    { "label": "Start Here", "href": "#start" },
+    { "label": "Concepts", "href": "#concepts" },
+    { "label": "Notebook", "href": "/notebook/" },
+    { "label": "Roadmap", "href": "#roadmap" }
+  ],
+  "hero": {
+    "kicker": "Notebook Example",
+    "title": "A beginner-friendly evolution notebook can be a real public study surface.",
+    "lede": "This example shows how SciSiteForge can publish concept pages, guided routes, multilingual queue visibility, and source-aware learning materials without turning the site into a dynamic application.",
+    "actions": [
+      { "label": "Start with the beginner route", "href": "/notebook/", "primary": true },
+      { "label": "View the roadmap", "href": "#roadmap", "primary": false }
+    ]
+  },
+  "content": {
+    "feature_cards": [
+      {
+        "title": "New to evolution?",
+        "body": "Use a short beginner route that explains what evolution is, why populations matter, and what to read next.",
+        "href": "/notebook/",
+        "meta": "reader route",
+        "link_label": "Open the Notebook"
+      },
+      {
+        "title": "Working with a concept cluster",
+        "body": "Core concepts like allele frequency change, drift, selection, and common descent can be grouped into a guided first ring.",
+        "href": "/notebook/",
+        "meta": "concept spine",
+        "link_label": "See the concept surface"
+      }
+    ],
+    "section_cards": [
+      {
+        "title": "Population Thinking",
+        "body": "A threshold idea can be promoted across several concept pages so readers stop treating evolution as change in isolated individuals.",
+        "href": "/notebook/",
+        "meta": "threshold concept",
+        "link_label": "Read the concept note"
+      },
+      {
+        "title": "Source status guidance",
+        "body": "Notebook pages can stay honest about citation and translation maturity while still helping a reader decide what is reliable for learning now.",
+        "href": "/translation-status/",
+        "meta": "trust cue",
+        "link_label": "View translation status"
+      }
+    ],
+    "bibliography_entries": [
+      {
+        "title": "doclift",
+        "body": "Recovered source documents and normalized content can feed the reader-facing Notebook surface.",
+        "href": "https://example.invalid/doclift",
+        "meta": "source recovery"
+      },
+      {
+        "title": "GroundRecall",
+        "body": "Grounded concepts, claims, and provenance provide the review memory behind notebook pages.",
+        "href": "https://example.invalid/groundrecall",
+        "meta": "grounding"
+      },
+      {
+        "title": "Didactopus",
+        "body": "Learning paths and mentorship-oriented sequencing can consume the same Notebook artifacts.",
+        "href": "https://example.invalid/didactopus",
+        "meta": "consumer"
+      }
+    ]
+  },
+  "notebook_title": "Core Evolution Concepts Notebook",
+  "notebook_lede": "A public-facing notebook can orient beginners, connect related concepts, and expose machine-readable artifacts without making them the primary user experience.",
+  "notebooks": [
+    {
+      "id": "foundations-first-ring",
+      "title": "Core Evolution Concepts",
+      "summary": "A first-ring notebook groups beginner-facing concepts into a path that moves from population change to larger historical patterns.",
+      "audience": "new learners, self-learners, and instructors",
+      "goals": [
+        "Give new readers a clear first fifteen minutes",
+        "Keep concept pages readable on their own",
+        "Show how source status and translation status affect trust without overwhelming the learner"
+      ],
+      "apps": [
+        {
+          "title": "Allele Tracker",
+          "href": "/apps/allele-tracker/",
+          "description": "A population-change sandbox linked to the first concepts in the route"
+        }
+      ],
+      "source_kinds": ["section", "notebook", "bibliography"],
+      "max_items": 8
+    }
+  ],
+  "roadmap": [
+    {
+      "title": "Add a real beginner route",
+      "status": "Recommended",
+      "body": "Use the landing page and notebook front door to make the first fifteen minutes obvious for a new reader."
+    },
+    {
+      "title": "Promote threshold concepts",
+      "status": "Recommended",
+      "body": "Concepts like population thinking should be visible across multiple pages and may deserve their own page."
+    },
+    {
+      "title": "Keep translations visible before they are complete",
+      "status": "Framework",
+      "body": "Planned languages should remain visible in the site shell, with queue and fallback status showing what work remains."
+    },
+    {
+      "title": "Treat regression checks as part of the build",
+      "status": "Framework",
+      "body": "Notebook mode should fail fast if required public pages or translation-status artifacts disappear."
+    }
+  ],
+  "content_sources": {}
+}

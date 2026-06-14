@@ -6,13 +6,14 @@
   <title>{{ page_title }} — {{ site_title }}</title>
   <meta name="description" content="{{ description }}">
   <link rel="stylesheet" href="{{ theme_stylesheet_href }}">
+  <script id="scisiteforge-shell-i18n" type="application/json">{{ shell_i18n_json }}</script>
   <script src="{{ theme_script_href }}" defer></script>
 </head>
 <body class="{{ body_class }}">
 <header class="site-header">
   <span class="site-name"><a href="/">{{ site_title }}</a></span>
   <span class="site-tagline">{{ theme_description }}</span>
-  <select id="lang-switch" onchange="switchLanguage(this.value)">
+  <select id="lang-switch" aria-label="{{ language_selector_label }}" onchange="switchLanguage(this.value)">
     {{ language_options }}
   </select>
   {{ language_policy_html }}
@@ -28,14 +29,14 @@
   </div>
 
   <section class="topic">
-    <h2>Feature cards</h2>
+    <h2 data-i18n="feature_cards">{{ label_feature_cards }}</h2>
     <div class="cards-grid">
       {{ feature_cards_html }}
     </div>
   </section>
 
   <section class="topic">
-    <h2>Notebook and app content</h2>
+    <h2 data-i18n="notebook_app_content">{{ label_notebook_app_content }}</h2>
     {{ notebook_html }}
     <div class="cards-grid">
       {{ section_cards_html }}
@@ -44,7 +45,7 @@
   </section>
 
   <section class="topic">
-    <h2>Bibliography</h2>
+    <h2 data-i18n="bibliography">{{ label_bibliography }}</h2>
     <ul class="archive-list bibliography-list">
       {{ bibliography_html }}
     </ul>

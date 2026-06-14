@@ -7,6 +7,7 @@
   <meta name="description" content="{{ description }}" />
   <link rel="stylesheet" href="{{ theme_stylesheet_href }}" />
   <link rel="icon" href="{{ theme_asset_prefix }}/toa.ico" sizes="any" />
+  <script id="scisiteforge-shell-i18n" type="application/json">{{ shell_i18n_json }}</script>
   <script src="{{ theme_script_href }}" defer></script>
 </head>
 <body class="{{ body_class }}">
@@ -43,7 +44,7 @@
             </div>
           </div>
           <div class="continuity-note hero-note">
-            <p class="eyebrow">What This Is</p>
+            <p class="eyebrow" data-i18n-nav='{"en":"What This Is","es":"Qué es esto","fr":"Ce que c’est","de":"Worum es geht","pt":"O que é isto"}'>What This Is</p>
             <h2>A preview of a working modernization path</h2>
             <p>The Archive remains a stable reference library. The redesign makes that library easier to read, search, and connect to sister Foundation resources.</p>
             <ul class="link-list compact-list">
@@ -56,14 +57,14 @@
       </section>
 
       <section id="start" class="content-panel lead-panel">
-        <h2>Start Here</h2>
+        <h2 data-i18n-nav='{"en":"Start Here","es":"Empiece aquí","fr":"Commencez ici","de":"Hier beginnen","pt":"Comece aqui"}'>Start Here</h2>
         <div class="feature-grid">
           {{ feature_cards_html }}
         </div>
       </section>
 
       <section id="resources" class="content-panel resources-panel">
-        <h2>Key Resources</h2>
+        <h2 data-i18n-nav='{"en":"Key Resources","es":"Recursos clave","fr":"Ressources clés","de":"Wichtige Ressourcen","pt":"Recursos principais"}'>Key Resources</h2>
         {{ notebook_html }}
         <div class="section-grid">
           {{ section_cards_html }}
@@ -72,14 +73,14 @@
       </section>
 
       <section id="references" class="content-panel">
-        <h2>Reference Context</h2>
+        <h2 data-i18n-nav='{"en":"Reference Context","es":"Contexto de referencia","fr":"Contexte de référence","de":"Referenzkontext","pt":"Contexto de referência"}'>Reference Context</h2>
         <ul class="archive-list bibliography-list">
           {{ bibliography_html }}
         </ul>
       </section>
 
       <section id="roadmap" class="content-panel roadmap-panel">
-        <h2>Roadmap</h2>
+        <h2 data-i18n-nav='{"en":"Roadmap","es":"Hoja de ruta","fr":"Feuille de route","de":"Fahrplan","pt":"Roteiro"}'>Roadmap</h2>
         {{ roadmap_html }}
       </section>
     </main>
@@ -88,10 +89,10 @@
       <p class="footer-note"><strong>{{ site_title }}</strong></p>
       <p class="footer-note">Exploring the creation/evolution controversy with archived resources, reviewed explanations, and modernized access.</p>
       <p class="footer-note">
-        <a href="/">Home</a> |
-        <a href="/search/">Search</a> |
-        <a href="https://www.talkorigins.org/origins/feedback/">Feedback</a> |
-        <a href="https://www.talkorigins.org/">Legacy Archive</a>
+        <a href="/" data-i18n-nav='{"en":"Home","es":"Inicio","fr":"Accueil","de":"Startseite","pt":"Início"}'>Home</a> |
+        <a href="/search/" data-i18n-nav='{"en":"Search","es":"Buscar","fr":"Recherche","de":"Suche","pt":"Pesquisar"}'>Search</a> |
+        <a href="https://www.talkorigins.org/origins/feedback/" data-i18n-nav='{"en":"Feedback","es":"Comentarios","fr":"Retour","de":"Feedback","pt":"Feedback"}'>Feedback</a> |
+        <a href="https://www.talkorigins.org/" data-i18n-nav='{"en":"Legacy Archive","es":"Archivo histórico","fr":"Archive historique","de":"Archiv","pt":"Arquivo histórico"}'>Legacy Archive</a>
       </p>
     </footer>
   </div>

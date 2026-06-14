@@ -20,7 +20,9 @@ from scisiteforge.content import (
     load_groundrecall_cards,
 )
 from scisiteforge.render import html_escape, read_text, render_template, write_text
+from scisiteforge.shell_i18n import nav_label, nav_translation_payload, shell_catalog_json, shell_text
 from scisiteforge.notebook import load_notebooks, render_notebooks
+from scisiteforge.site_artifacts import verify_public_output, write_translation_artifacts
 from scisiteforge.themes import available_themes, get_theme, materialize_theme
 
 
@@ -65,14 +67,12 @@ def _prompt_for_config() -> dict[str, Any]:
 
 def _language_options_html(languages: list[dict[str, str]], current_lang: str) -> str:
     visible_languages = [
-        item
-        for item in languages
-        if item.get("coverage", True) or item.get("code") == current_lang
+        item for item in languages if item.get("code")
     ]
     if len(visible_languages) <= 1:
         return ""
     return "\n".join(
-        f'<option value="{html_escape(item["code"])}" {"selected" if item["code"] == current_lang else ""}>{html_escape(item["name"])}</option>'
+        f'<option value="{html_escape(item["code"])}" data-coverage="{str(bool(item.get("coverage", False))).lower()}" {"selected" if item["code"] == current_lang else ""}>{html_escape(item["name"])}</option>'
         for item in visible_languages
     )
 
@@ -105,18 +105,18 @@ def _roadmap_html(roadmap: list[dict[str, Any]], language_policy: dict[str, Any]
     if planned_names:
         items.append(
             '<li><strong>Multilingual access</strong> <span class="meta">Planned</span>'
-            f'<p>Language options will appear only when reviewed coverage exists. Target languages under consideration: {planned_names}.</p></li>'
+            f'<p>Language options remain visible in the shared site shell while translation coverage is still being built. Target languages under consideration: {planned_names}.</p></li>'
         )
     if not items:
         return ""
     return '<ul class="roadmap-list">' + "\n".join(items) + "</ul>"
 
 
-def _language_selector_html(language_options: str) -> str:
+def _language_selector_html(language_options: str, aria_label: str) -> str:
     if not language_options:
         return ""
     return (
-        '<select id="lang-switch" aria-label="Language" onchange="switchLanguage(this.value)">'
+        f'<select id="lang-switch" aria-label="{html_escape(aria_label)}" onchange="switchLanguage(this.value)">'
         f"{language_options}"
         "</select>"
     )
@@ -131,9 +131,9 @@ def _hero_actions_html(actions: list[dict[str, Any]]) -> str:
     )
 
 
-def _navigation_html(navigation: list[dict[str, str]]) -> str:
+def _navigation_html(navigation: list[dict[str, str]], current_lang: str) -> str:
     return "\n".join(
-        f'<a href="{html_escape(item.get("href", "#"))}">{html_escape(item.get("label", "Link"))}</a>'
+        f'<a href="{html_escape(item.get("href", "#"))}" data-i18n-nav="{html_escape(nav_translation_payload(item))}">{html_escape(nav_label(item, current_lang))}</a>'
         for item in navigation
     )
 
@@ -210,14 +210,33 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
         "body_class": html_escape(theme.body_class),
         "site_shell_class": html_escape(theme.shell_class),
         "page_class": html_escape(theme.page_class),
-        "navigation_html": _navigation_html(config.get("navigation", [])),
+        "navigation_html": _navigation_html(config.get("navigation", []), config.get("lang", "en")),
         "language_options": _language_options_html(languages, config.get("lang", "en")),
-        "language_selector_html": _language_selector_html(_language_options_html(languages, config.get("lang", "en"))),
+        "language_selector_html": _language_selector_html(
+            _language_options_html(languages, config.get("lang", "en")),
+            shell_text(config.get("lang", "en"), "language_selector_label"),
+        ),
         "language_policy_html": _language_policy_html(language_policy),
+        "language_selector_label": html_escape(shell_text(config.get("lang", "en"), "language_selector_label")),
+        "shell_i18n_json": shell_catalog_json(),
         "hero_kicker": html_escape(hero.get("kicker", theme.display_name)),
         "hero_title": html_escape(hero.get("title", config.get("title", ""))),
         "hero_lede": html_escape(hero.get("lede", config.get("description", ""))),
         "hero_actions_html": _hero_actions_html(hero.get("actions", [])),
+        "label_theme": html_escape(shell_text(config.get("lang", "en"), "theme")),
+        "label_language": html_escape(shell_text(config.get("lang", "en"), "language")),
+        "label_sources": html_escape(shell_text(config.get("lang", "en"), "sources")),
+        "label_llm": html_escape(shell_text(config.get("lang", "en"), "llm")),
+        "label_overview": html_escape(shell_text(config.get("lang", "en"), "overview")),
+        "label_what_theme_supports": html_escape(shell_text(config.get("lang", "en"), "what_theme_supports")),
+        "label_notebook_and_apps": html_escape(shell_text(config.get("lang", "en"), "notebook_and_apps")),
+        "label_structured_sources": html_escape(shell_text(config.get("lang", "en"), "structured_sources")),
+        "label_theme_catalog": html_escape(shell_text(config.get("lang", "en"), "theme_catalog")),
+        "label_feature_cards": html_escape(shell_text(config.get("lang", "en"), "feature_cards")),
+        "label_notebook_app_content": html_escape(shell_text(config.get("lang", "en"), "notebook_app_content")),
+        "label_bibliography": html_escape(shell_text(config.get("lang", "en"), "bibliography")),
+        "label_github": html_escape(shell_text(config.get("lang", "en"), "github")),
+        "label_contact": html_escape(shell_text(config.get("lang", "en"), "contact")),
         "feature_cards_html": _render_cards(site_content.feature_cards, Path(__file__).parent.parent / "templates" / "app-card.html", config.get("lang", "en")),
         "section_cards_html": _render_cards(site_content.section_cards, Path(__file__).parent.parent / "templates" / "notebook-section.html", config.get("lang", "en")),
         "app_cards_html": _render_cards(site_content.app_cards, Path(__file__).parent.parent / "templates" / "app-card.html", config.get("lang", "en")),
@@ -235,7 +254,46 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
     )
     rendered = render_template(template, page_context)
     write_text(out_path / "index.html", rendered)
-    return {"output_dir": str(out_path), "theme": theme.name, "theme_assets": theme_context["theme_assets"]}
+
+    if notebooks:
+        notebook_context = dict(page_context)
+        notebook_context.update(
+            {
+                "page_title": html_escape(f"{config.get('site_title', 'SciSiteForge')} Notebook"),
+                "hero_kicker": "Notebook",
+                "hero_title": html_escape(config.get("notebook_title", "Notebook")),
+                "hero_lede": html_escape(
+                    config.get(
+                        "notebook_lede",
+                        "Structured study modules, linked apps, and source-grounded explanations.",
+                    )
+                ),
+                "hero_actions_html": _hero_actions_html(
+                    [{"label": "Back to home", "href": "/", "primary": True}]
+                ),
+                "feature_cards_html": "",
+                "section_cards_html": "",
+                "app_cards_html": "",
+                "bibliography_html": "",
+                "roadmap_html": "",
+            }
+        )
+        write_text(out_path / "notebook" / "index.html", render_template(template, notebook_context))
+
+    translation_payload = write_translation_artifacts(
+        config=config,
+        theme=theme,
+        theme_context=theme_context,
+        navigation_html=page_context["navigation_html"],
+        output_dir=out_path,
+    )
+    report = verify_public_output(config, out_path, translation_payload)
+    return {
+        "output_dir": str(out_path),
+        "theme": theme.name,
+        "theme_assets": theme_context["theme_assets"],
+        "regression_summary": report["summary"],
+    }
 
 
 def main() -> None:

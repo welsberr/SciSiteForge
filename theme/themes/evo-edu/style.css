@@ -137,6 +137,36 @@ img {
   transform: translateY(-1px);
 }
 
+#lang-switch {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font: inherit;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.language-policy-note {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.translation-fallback-banner {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 252, 247, 0.92);
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}
+
+.translation-fallback-banner strong {
+  color: var(--ink);
+}
+
 .hero-card {
   padding: 34px;
   margin-bottom: 22px;
@@ -236,6 +266,23 @@ img {
 
 .feature-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.status-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.status-table th,
+.status-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
 }
 
 .feature-card,

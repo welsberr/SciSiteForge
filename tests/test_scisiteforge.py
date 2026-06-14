@@ -199,7 +199,7 @@ class SciSiteForgeTests(unittest.TestCase):
             self.assertIn("A Study", html)
             self.assertTrue((out_dir / "theme" / "assets" / "toa.ico").exists())
 
-    def test_build_site_filters_languages_by_coverage_and_shows_planned_list(self) -> None:
+    def test_build_site_keeps_planned_languages_visible_and_generates_translation_artifacts(self) -> None:
         from tempfile import TemporaryDirectory
 
         with TemporaryDirectory() as tmp:
@@ -236,14 +236,119 @@ class SciSiteForgeTests(unittest.TestCase):
             config_path.write_text(json.dumps(config), encoding="utf-8")
 
             out_dir = tmp_path / "out"
+            result = build.build_site(config_path, out_dir)
+
+            html = (out_dir / "index.html").read_text(encoding="utf-8")
+            self.assertIn('<select id="lang-switch"', html)
+            self.assertIn('value="es"', html)
+            self.assertIn('value="fr"', html)
+            self.assertIn('id="scisiteforge-shell-i18n"', html)
+            self.assertIn("Multilingual access", html)
+            self.assertIn("Language options remain visible in the shared site shell", html)
+            self.assertIn("Target languages under consideration: Español, Français", html)
+
+            queue_html = (out_dir / "translation-status" / "index.html").read_text(encoding="utf-8")
+            queue_json = json.loads((out_dir / "translation-status" / "queue.json").read_text(encoding="utf-8"))
+            report_md = (out_dir / "build" / "site_regression_report.md").read_text(encoding="utf-8")
+
+            self.assertIn("Translation Queue", queue_html)
+            self.assertIn("Current translation status", queue_html)
+            self.assertEqual(queue_json["schema"], "scisiteforge.translation_queue.v1")
+            self.assertEqual(queue_json["default_language"], "en")
+            self.assertEqual(result["regression_summary"]["failed"], 0)
+            self.assertIn("Passed:", report_md)
+
+    def test_build_site_localizes_shared_shell_strings_for_current_language(self) -> None:
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            config = {
+                "lang": "es",
+                "title": "Vista previa",
+                "site_title": "Evolución",
+                "license": "CC BY-SA 4.0",
+                "github_url": "https://example.invalid",
+                "contact_email": "admin@example.invalid",
+                "theme": "evo-edu",
+                "languages": [
+                    {"code": "en", "name": "English", "coverage": True},
+                    {"code": "es", "name": "Español", "coverage": True},
+                ],
+                "navigation": [
+                    {"label": "Home", "href": "/"},
+                    {"label": "Roadmap", "href": "#roadmap"},
+                ],
+                "hero": {
+                    "kicker": "Vista previa",
+                    "title": "Superficie compartida",
+                    "lede": "Comprobación de traducción de la interfaz común.",
+                    "actions": [{"label": "Abrir", "href": "#overview", "primary": True}],
+                },
+                "content_sources": {},
+            }
+            config_path = tmp_path / "site.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+
+            out_dir = tmp_path / "out"
             build.build_site(config_path, out_dir)
 
             html = (out_dir / "index.html").read_text(encoding="utf-8")
-            self.assertNotIn('<select id="lang-switch"', html)
-            self.assertNotIn('value="es"', html)
-            self.assertNotIn('value="fr"', html)
-            self.assertIn("Multilingual access", html)
-            self.assertIn("Target languages under consideration: Español, Français", html)
+            self.assertIn(">Inicio</a>", html)
+            self.assertIn(">Hoja de ruta</a>", html)
+            self.assertIn("aria-label=\"Idioma\"", html)
+            self.assertIn(">Tema</strong>", html)
+            self.assertIn(">Idioma</strong>", html)
+
+    def test_build_site_generates_notebook_page_when_notebooks_are_configured(self) -> None:
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            config = {
+                "lang": "en",
+                "title": "Notebook Preview",
+                "site_title": "Evolution Education",
+                "license": "CC BY-SA 4.0",
+                "github_url": "https://example.invalid",
+                "contact_email": "admin@example.invalid",
+                "theme": "evo-edu",
+                "languages": [
+                    {"code": "en", "name": "English", "coverage": True},
+                    {"code": "es", "name": "Español", "coverage": False},
+                ],
+                "navigation": [{"label": "Home", "href": "/"}],
+                "hero": {
+                    "kicker": "Notebook",
+                    "title": "Concept notebook",
+                    "lede": "Study modules and source-grounded explanations.",
+                    "actions": [{"label": "Explore", "href": "#overview", "primary": True}],
+                },
+                "content_sources": {},
+                "notebooks": [
+                    {
+                        "id": "first-ring",
+                        "title": "First Ring Concepts",
+                        "summary": "Core evolution ideas for beginners.",
+                        "audience": "self-learners",
+                        "goals": ["Build population-level reasoning about evolution"],
+                        "apps": [{"title": "Allele Tracker", "href": "/apps/allele-tracker/", "description": "Population change sandbox"}],
+                        "source_kinds": ["notebook"],
+                    }
+                ],
+            }
+            config_path = tmp_path / "site.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+
+            out_dir = tmp_path / "out"
+            result = build.build_site(config_path, out_dir)
+
+            notebook_html = (out_dir / "notebook" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("Notebook", notebook_html)
+            self.assertIn("Goals", notebook_html)
+            self.assertIn("Apps and Labs", notebook_html)
+            self.assertIn("First Ring Concepts", notebook_html)
+            self.assertEqual(result["regression_summary"]["failed"], 0)
 
     def test_notebook_pattern_groups_goals_apps_and_source_cards(self) -> None:
         from tempfile import TemporaryDirectory

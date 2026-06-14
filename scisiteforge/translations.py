@@ -45,7 +45,7 @@ class GenieHiveTranslator:
     def _build_prompt(self, text: str, target_language: str, glossary: dict[str, str]) -> str:
         glossary_text = ""
         if glossary:
-            glossary_text = "Use these translations when they fit the target language:\n" + "\n".join(
+            glossary_text = "Use these canonical translations exactly wherever the source phrase occurs:\n" + "\n".join(
                 f"- {source} => {target}" for source, target in glossary.items()
             )
             glossary_text += "\n\n"
