@@ -45,3 +45,11 @@ modules and Panda's Thumb can use it for topic dossiers.
 
 See [NOTEBOOKS.md](NOTEBOOKS.md) for the generic notebook pattern and the
 site-specific application notes.
+
+## 8. Public Surface Guardrails
+
+For archive-scale sites, pair the build workflow with the reusable
+public-surface guardrails in
+[PUBLIC_SURFACE_GUARDRAILS.md](PUBLIC_SURFACE_GUARDRAILS.md): scoped updates,
+canonical and JSON-LD checks, search corpus validation, bibliography
+preservation, portable artifact checks, and performance guardrails.

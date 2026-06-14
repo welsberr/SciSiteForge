@@ -22,6 +22,10 @@ This repository provides a reusable foundation for sites like **evo-edu.org**, `
 - TalkOrigins Foundation Notebook planning for static review surfaces over
   GroundRecall, doclift, Didactopus, CiteGeist, and wolfe artifacts. See
   [docs/FOUNDATION_NOTEBOOK.md](docs/FOUNDATION_NOTEBOOK.md)
+- Public-surface guardrails for scoped updates, canonical metadata, JSON-LD,
+  search corpora, bibliography preservation, portable builds, performance
+  checks, and archive/status separation. See
+  [docs/PUBLIC_SURFACE_GUARDRAILS.md](docs/PUBLIC_SURFACE_GUARDRAILS.md)
 - Optional translation tooling can use local GenieHive LLM endpoints. See
   [docs/GENIEHIVE_TRANSLATION.md](docs/GENIEHIVE_TRANSLATION.md)
 
