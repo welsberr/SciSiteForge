@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .public_surface import audit_public_surface
 from .render import html_escape, write_text
 from .themes import ThemeSpec
 
@@ -248,6 +249,8 @@ def verify_public_output(
     }
     build_root = out / "build"
     build_root.mkdir(parents=True, exist_ok=True)
+    guardrail_report = audit_public_surface(config, out)
+    write_text(build_root / "public_surface_guardrails.json", json.dumps(guardrail_report, indent=2) + "\n")
     write_text(build_root / "site_regression_report.json", json.dumps(report, indent=2) + "\n")
     lines = [
         "# Site Regression Report",
@@ -269,5 +272,19 @@ def verify_public_output(
         for failure in item["failures"]:
             lines.append(f"- Missing: `{failure}`")
         lines.append("")
+    lines.extend(
+        [
+            "## Public Surface Guardrails",
+            "",
+            f"- Errors: `{guardrail_report['summary']['errors']}`",
+            f"- Warnings: `{guardrail_report['summary']['warnings']}`",
+            f"- HTML pages audited: `{guardrail_report['counts']['html_pages']}`",
+            f"- Active pages audited: `{guardrail_report['counts']['active_pages']}`",
+            f"- Search records audited: `{guardrail_report['counts']['search_records']}`",
+            "",
+            "See `public_surface_guardrails.json` for the full finding list.",
+            "",
+        ]
+    )
     write_text(build_root / "site_regression_report.md", "\n".join(lines).rstrip() + "\n")
     return report

@@ -72,6 +72,13 @@ Search corpus audits should run before publishing search updates. If direct
 public URLs for search files are expected, deployment checks should verify that
 the web server exposes those files, not just that rsync copied them.
 
+SciSiteForge builds write `build/public_surface_guardrails.json` as a reusable
+first-pass audit surface. The report currently validates HTML metadata,
+JSON-LD parseability and URL consistency, active/process-surface separation,
+and basic search corpus manifest/JSONL shape. Site repos should layer their own
+route inventory, thresholds, and deployment checks on top of that framework
+report.
+
 ## Bibliography Preservation
 
 Expanded bibliography output is high-value generated content and should be

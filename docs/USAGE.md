@@ -115,12 +115,20 @@ configuration, expect:
 - `notebook/index.html`
 - `translation-status/index.html`
 - `translation-status/queue.json`
+- `build/public_surface_guardrails.json`
 - `build/site_regression_report.json`
 - `build/site_regression_report.md`
 
 These reports are part of the framework contract. They are meant to make
 public-surface regressions visible during the build instead of only after
 deployment.
+
+`public_surface_guardrails.json` is a machine-readable audit report using the
+`scisiteforge.public_surface_guardrails.v1` schema. It checks built HTML pages
+for titles, descriptions, canonical links, JSON-LD validity, canonical/JSON-LD
+URL consistency, active/process-surface separation, and basic search corpus
+manifest/JSONL shape when a `search/corpora.json` manifest is present. The
+Markdown regression report summarizes the guardrail error and warning counts.
 
 For archive-scale sites, pair these reports with the reusable public-surface
 guardrails in [PUBLIC_SURFACE_GUARDRAILS.md](PUBLIC_SURFACE_GUARDRAILS.md):

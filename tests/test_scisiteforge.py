@@ -16,6 +16,7 @@ import translate_site
 
 from scisiteforge.content import SiteContent, cards_from_config, load_citegeist_cards, load_didactopus_cards, load_doclift_cards, load_groundrecall_cards
 from scisiteforge.notebook import load_notebooks, render_notebooks
+from scisiteforge.public_surface import audit_public_surface
 from scisiteforge.themes import get_theme, materialize_theme
 from scisiteforge.translations import GenieHiveTranslator, TranslationConfig
 
@@ -250,6 +251,7 @@ class SciSiteForgeTests(unittest.TestCase):
             queue_html = (out_dir / "translation-status" / "index.html").read_text(encoding="utf-8")
             queue_json = json.loads((out_dir / "translation-status" / "queue.json").read_text(encoding="utf-8"))
             report_md = (out_dir / "build" / "site_regression_report.md").read_text(encoding="utf-8")
+            guardrail_json = json.loads((out_dir / "build" / "public_surface_guardrails.json").read_text(encoding="utf-8"))
 
             self.assertIn("Translation Queue", queue_html)
             self.assertIn("Current translation status", queue_html)
@@ -257,6 +259,35 @@ class SciSiteForgeTests(unittest.TestCase):
             self.assertEqual(queue_json["default_language"], "en")
             self.assertEqual(result["regression_summary"]["failed"], 0)
             self.assertIn("Passed:", report_md)
+            self.assertIn("Public Surface Guardrails", report_md)
+            self.assertEqual(guardrail_json["schema"], "scisiteforge.public_surface_guardrails.v1")
+            self.assertGreaterEqual(guardrail_json["counts"]["html_pages"], 2)
+
+    def test_public_surface_audit_reports_structural_metadata_errors(self) -> None:
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            page = tmp_path / "index.html"
+            page.write_text(
+                """<!doctype html>
+<html lang="en">
+<head>
+  <title>Example</title>
+  <meta name="description" content="Example page">
+  <link rel="canonical" href="https://example.org/">
+  <link rel="canonical" href="https://example.org/duplicate">
+</head>
+<body>Example</body>
+</html>
+""",
+                encoding="utf-8",
+            )
+
+            report = audit_public_surface({"base_url": "https://example.org"}, tmp_path)
+
+            self.assertEqual(report["summary"]["errors"], 1)
+            self.assertEqual(report["findings"][0]["code"], "duplicate_canonical")
 
     def test_build_site_localizes_shared_shell_strings_for_current_language(self) -> None:
         from tempfile import TemporaryDirectory
