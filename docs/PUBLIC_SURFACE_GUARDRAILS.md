@@ -169,6 +169,41 @@ Recommended content kinds:
 Search and JSON-LD should not blur private/editorial machinery into canonical
 article content.
 
+## GitHub Pages Publish Hygiene
+
+GitHub Pages repositories are public distribution surfaces, not build
+workspaces. Deployment tooling must copy only reviewed public artifacts into a
+Pages checkout.
+
+Default exclusions for GitHub Pages publishes:
+
+- secrets, credentials, keys, tokens, cookies, session files, and environment
+  files
+- local absolute paths, usernames, hostnames, private IPs, and command logs
+- generated build reports, route inventories, redirect plans, quality reports,
+  search-corpus staging files, and deployment verification outputs unless they
+  are intentionally public release artifacts
+- private or editorial workbench pages, review dashboards, notebooks used only
+  for operations, and migration planning surfaces
+- model logs, translation run manifests, queue leases, node state, and
+  machine-local progress state
+- source snapshots that include dynamic app internals, password-reset routes,
+  module paths, or other legacy attack-surface metadata
+
+Publish wrappers should implement these exclusions directly rather than relying
+on operator memory. Use allowlists or narrowly scoped rsync/git add rules when
+possible, and treat broad `--delete` syncs into a Pages checkout as unsafe
+unless exclusions are explicit and tested.
+
+Before pushing a Pages update, deployment tooling should scan the staged tree
+for common secret markers and local metadata, and should verify that disallowed
+route classes are absent from the commit. If a bad Pages commit is pushed,
+deleting files in a follow-up commit is not enough: rewrite the public branch
+history with a clean replacement commit and force-push with lease. Credential
+rotation is required if actual secrets were exposed; if only operational
+metadata was exposed, record the incident and scrub history according to the
+site's risk tolerance.
+
 ## Persistent Memory and Decision Records
 
 When a site uses GroundRecall or another persistent memory system, major
