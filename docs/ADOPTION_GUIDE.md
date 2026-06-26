@@ -316,6 +316,7 @@ A broader user base needs clean handoff. Each site should document:
 - how to run tests or regression checks
 - how to deploy and roll back
 - how translation queues are advanced
+- how small translation corrections are isolated from active queues
 - how Notebook artifacts are reviewed
 - how search corpora are generated
 - where dynamic app data lives

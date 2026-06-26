@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page_title }} — {{ site_title }}</title>
   <meta name="description" content="{{ description }}">
+  {{ translation_review_meta_html }}
   <link rel="stylesheet" href="{{ theme_stylesheet_href }}">
   <script id="scisiteforge-shell-i18n" type="application/json">{{ shell_i18n_json }}</script>
   <script src="{{ theme_script_href }}" defer></script>
@@ -18,6 +19,8 @@
   </select>
   {{ language_policy_html }}
 </header>
+
+{{ translation_disclaimer_html }}
 
 <main>
   <div class="card">

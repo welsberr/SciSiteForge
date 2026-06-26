@@ -221,6 +221,25 @@ a:hover {
   color: var(--ink);
 }
 
+.translation-quality-disclaimer {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(251, 246, 238, 0.94));
+  color: var(--muted);
+  box-shadow: var(--card-shadow);
+}
+
+.translation-quality-disclaimer p {
+  margin: 0;
+}
+
+.translation-quality-disclaimer strong {
+  color: var(--ink);
+}
+
 .button-link,
 .top-nav a:first-child {
   background: linear-gradient(180deg, var(--blue), var(--blue-deep));

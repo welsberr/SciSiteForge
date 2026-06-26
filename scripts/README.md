@@ -47,6 +47,8 @@ translation provider is GenieHive through its OpenAI-compatible chat endpoint.
 See `docs/GENIEHIVE_TRANSLATION.md` for the SciSiteForge client-side
 configuration guide and the GenieHive repository's
 `docs/translation_support.md` for the control-plane and node-side notes.
+That guide also defines the isolated Codex Spark patch mode for small
+translation corrections that must not disturb an active translation queue.
 
 ```bash
 python3 scripts/translate_site.py \

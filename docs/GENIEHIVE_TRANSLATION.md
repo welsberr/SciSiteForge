@@ -87,6 +87,108 @@ database.
 For site-specific translation runs, keep the source tree and destination tree
 separate. Translation should not overwrite the English source.
 
+Automatically translated pages must carry a visible disclaimer before the page
+content. SciSiteForge templates provide this as
+`.translation-quality-disclaimer`, inserted after the site header and before
+the main content. The generated page also carries
+`<meta name="scisiteforge:translation-review" content="automated-unreviewed">`
+until the translation has been reviewed.
+
+The disclaimer appears when:
+
+- the page language differs from the configured source language
+- `translation.status` or `translation.review` is `automated` or
+  `automated-unreviewed`
+- `translation.automated` is `true`
+
+Set `translation.source_language` when building a translated page. If no source
+language is provided, SciSiteForge treats English as the source language. Set
+`translation.feedback_url` when the site has a public feedback route; otherwise
+the disclaimer falls back to the configured `contact_email`.
+
+## Small Translation Fixes
+
+Use a separate Spark patch mode for small, targeted translation corrections
+when a full translation queue is already running or when updating the queue
+state would be disproportionate to the correction.
+
+This mode is for cases such as:
+
+- a short homepage or shell phrase mistranslates badly in one or more
+  languages
+- the English source text needs a small wording change to avoid ambiguous
+  translation
+- a translated metadata, navigation, or footer string needs replacement across
+  the generated language trees
+
+Do not use the normal queue worker for this mode unless changing
+`translation-status/queue.json` is intended. Queue workers often mark pages
+complete, update lease state, or rewrite status artifacts as a side effect.
+
+The expected process is:
+
+1. Search GroundRecall first for prior site-specific Spark translation work and
+   the current site convention.
+2. Patch the source generator or source content first, so future rebuilds keep
+   the corrected wording.
+3. Create an isolated run directory under
+   `build/translation-runs/<site>-spark-patch-YYYYMMDDTHHMMSSZ/`.
+4. Save a prompt file and JSON Schema file in that directory.
+5. Run Codex Spark directly and capture the model output in the same directory.
+6. Apply the returned JSON with a deterministic script or reviewable manifest
+   that touches only the intended generated fields.
+7. Verify queue JSON parseability and, if a resilient queue is running, verify
+   that its locks or leases were not changed.
+8. Search the updated pages and generator for the rejected wording.
+9. Save a GroundRecall source note with the run directory, command, fields
+   touched, queue-isolation decision, and verification results.
+
+The run directory should contain enough material for a maintainer to reproduce
+or audit the correction:
+
+- `prompt.md`
+- `output-schema.json`
+- `spark-output.json`
+- `apply_<scope>.py` or an equivalent deterministic apply script
+- `apply-manifest.json`
+
+The apply manifest should explicitly record:
+
+- `model`
+- `queue_touched: false`
+- updated files
+- updated fields or selectors
+- verification notes where practical
+
+Example Spark invocation:
+
+```bash
+codex exec -m gpt-5.3-codex-spark \
+  -C /path/to/site-repo \
+  -s workspace-write \
+  --output-schema build/translation-runs/site-spark-patch-YYYYMMDDTHHMMSSZ/output-schema.json \
+  -o build/translation-runs/site-spark-patch-YYYYMMDDTHHMMSSZ/spark-output.json \
+  - < build/translation-runs/site-spark-patch-YYYYMMDDTHHMMSSZ/prompt.md
+```
+
+Prompt constraints should be explicit for the failure being corrected. For
+example, if a phrase translated into wording that implies censorship or
+editorial suppression, list the forbidden meanings directly and ask Spark for
+JSON only. Preserve site names, technical terms, and accepted glossary choices.
+
+Minimum verification:
+
+```bash
+python3 -m json.tool build/translation-runs/site-spark-patch-YYYYMMDDTHHMMSSZ/spark-output.json
+python3 -m json.tool public_html/translation-status/queue.json
+python3 -m py_compile build/translation-runs/site-spark-patch-YYYYMMDDTHHMMSSZ/apply_scope.py
+rg -n "rejected phrase|bad back-translation|source ambiguity" public_html/ path/to/generator.py
+```
+
+If the generated pages cannot be safely rebuilt without clobbering in-progress
+translations, apply the targeted generated-page correction and document that
+rebuild risk in the run manifest and GroundRecall note.
+
 ## Suggested Defaults
 
 For local development:

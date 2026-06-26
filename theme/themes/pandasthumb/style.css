@@ -73,6 +73,26 @@ body > header {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 253, 249, 0.92));
 }
 
+.translation-quality-disclaimer {
+  width: min(var(--max-width), calc(100vw - 28px));
+  margin: 0 auto 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: 18px;
+  background: var(--panel);
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}
+
+.translation-quality-disclaimer p {
+  margin: 0;
+}
+
+.translation-quality-disclaimer strong {
+  color: var(--ink);
+}
+
 .site-header .site-name,
 .site-header .site-name a {
   color: var(--ink);

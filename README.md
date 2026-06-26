@@ -51,7 +51,9 @@ public-knowledge sites. It is being proven through sites such as
   search corpora, bibliography preservation, portable builds, performance
   checks, and archive/status separation. See
   [docs/PUBLIC_SURFACE_GUARDRAILS.md](docs/PUBLIC_SURFACE_GUARDRAILS.md)
-- Optional translation tooling can use local GenieHive LLM endpoints. See
+- Optional translation tooling can use local GenieHive LLM endpoints, with an
+  isolated Codex Spark patch mode for small corrections that should not disturb
+  active translation queues. See
   [docs/GENIEHIVE_TRANSLATION.md](docs/GENIEHIVE_TRANSLATION.md)
 - Framework-generated translation queue and status pages under `translation-status/`
 - Framework-generated build regression reports under `build/site_regression_report.{json,md}`

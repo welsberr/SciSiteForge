@@ -263,6 +263,83 @@ class SciSiteForgeTests(unittest.TestCase):
             self.assertEqual(guardrail_json["schema"], "scisiteforge.public_surface_guardrails.v1")
             self.assertGreaterEqual(guardrail_json["counts"]["html_pages"], 2)
 
+    def test_automated_translation_pages_render_disclaimer_before_content(self) -> None:
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            config = {
+                "lang": "es",
+                "title": "Vista previa",
+                "site_title": "Sitio de prueba",
+                "description": "Página traducida de prueba.",
+                "license": "CC BY-SA 4.0",
+                "github_url": "https://example.invalid",
+                "contact_email": "feedback@example.invalid",
+                "theme": "talkorigins-modern",
+                "languages": [
+                    {"code": "en", "name": "English", "coverage": True},
+                    {"code": "es", "name": "Español", "coverage": True},
+                ],
+                "translation": {
+                    "source_language": "en",
+                    "status": "automated-unreviewed",
+                    "feedback_url": "/feedback/",
+                },
+                "navigation": [{"label": "Home", "href": "/"}],
+                "hero": {
+                    "kicker": "Vista previa",
+                    "title": "Contenido traducido",
+                    "lede": "Texto de prueba.",
+                    "actions": [],
+                },
+                "content_sources": {},
+            }
+            config_path = tmp_path / "site.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+
+            out_dir = tmp_path / "out"
+            build.build_site(config_path, out_dir)
+
+            html = (out_dir / "index.html").read_text(encoding="utf-8")
+            self.assertIn('<meta name="scisiteforge:translation-review" content="automated-unreviewed" />', html)
+            self.assertIn('class="translation-quality-disclaimer"', html)
+            self.assertIn('data-translation-disclaimer="automated"', html)
+            self.assertIn("Aviso de traducción automática", html)
+            self.assertIn('<a href="/feedback/">Enviar comentarios</a>', html)
+            self.assertLess(html.index('class="translation-quality-disclaimer"'), html.index("<main id=\"main\">"))
+            self.assertGreater(html.index('class="translation-quality-disclaimer"'), html.index("</header>"))
+
+    def test_source_language_pages_do_not_render_translation_disclaimer(self) -> None:
+        from tempfile import TemporaryDirectory
+
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            config = {
+                "lang": "en",
+                "title": "Preview",
+                "site_title": "Test Site",
+                "description": "Source page.",
+                "license": "CC BY-SA 4.0",
+                "github_url": "https://example.invalid",
+                "contact_email": "feedback@example.invalid",
+                "theme": "talkorigins-modern",
+                "languages": [{"code": "en", "name": "English", "coverage": True}],
+                "translation": {"source_language": "en"},
+                "navigation": [{"label": "Home", "href": "/"}],
+                "hero": {"title": "Source content", "lede": "Test text.", "actions": []},
+                "content_sources": {},
+            }
+            config_path = tmp_path / "site.json"
+            config_path.write_text(json.dumps(config), encoding="utf-8")
+
+            out_dir = tmp_path / "out"
+            build.build_site(config_path, out_dir)
+
+            html = (out_dir / "index.html").read_text(encoding="utf-8")
+            self.assertNotIn("translation-quality-disclaimer", html)
+            self.assertNotIn("scisiteforge:translation-review", html)
+
     def test_public_surface_audit_reports_structural_metadata_errors(self) -> None:
         from tempfile import TemporaryDirectory
 

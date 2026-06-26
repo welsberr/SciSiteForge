@@ -25,6 +25,9 @@ _SHELL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "translation_preview_link": "Open translation queue",
         "still_viewing_default": "You are still viewing the default language.",
         "language_selector_label": "Language",
+        "automated_translation_label": "Automated translation notice",
+        "automated_translation_body": "This page was translated automatically. It may contain errors or awkward wording. If you are a native speaker and find a problem, please send feedback so we can correct it.",
+        "automated_translation_feedback": "Send feedback",
     },
     "es": {
         "theme": "Tema",
@@ -46,6 +49,9 @@ _SHELL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "translation_preview_link": "Abrir cola de traducción",
         "still_viewing_default": "Todavía está viendo el idioma predeterminado.",
         "language_selector_label": "Idioma",
+        "automated_translation_label": "Aviso de traducción automática",
+        "automated_translation_body": "Esta página fue traducida automáticamente. Puede contener errores o redacciones incómodas. Si eres hablante nativo y encuentras un problema, por favor envía tus comentarios para que podamos corregirlo.",
+        "automated_translation_feedback": "Enviar comentarios",
     },
     "fr": {
         "theme": "Thème",
@@ -67,6 +73,9 @@ _SHELL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "translation_preview_link": "Ouvrir la file de traduction",
         "still_viewing_default": "Vous consultez toujours la langue par défaut.",
         "language_selector_label": "Langue",
+        "automated_translation_label": "Avertissement de traduction automatique",
+        "automated_translation_body": "Cette page a été traduite automatiquement. Elle peut contenir des erreurs ou des formulations maladroites. Si vous êtes locuteur natif et repérez un problème, veuillez envoyer vos remarques pour que nous puissions le corriger.",
+        "automated_translation_feedback": "Envoyer un commentaire",
     },
     "de": {
         "theme": "Thema",
@@ -88,6 +97,9 @@ _SHELL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "translation_preview_link": "Übersetzungswarteschlange öffnen",
         "still_viewing_default": "Sie sehen weiterhin die Standardsprache.",
         "language_selector_label": "Sprache",
+        "automated_translation_label": "Hinweis auf automatische Übersetzung",
+        "automated_translation_body": "Diese Seite wurde automatisch übersetzt. Sie kann Fehler oder unbeholfene Formulierungen enthalten. Wenn du Muttersprachler*in bist und ein Problem feststellst, sende bitte ein Feedback, damit wir es korrigieren können.",
+        "automated_translation_feedback": "Feedback senden",
     },
     "pt": {
         "theme": "Tema",
@@ -109,6 +121,9 @@ _SHELL_TRANSLATIONS: dict[str, dict[str, str]] = {
         "translation_preview_link": "Abrir fila de tradução",
         "still_viewing_default": "Você ainda está vendo o idioma padrão.",
         "language_selector_label": "Idioma",
+        "automated_translation_label": "Aviso de tradução automática",
+        "automated_translation_body": "Esta página foi traduzida automaticamente. Pode conter erros ou frases estranhas. Se você é falante nativo e encontrar algum problema, envie seu feedback para que possamos corrigi-lo.",
+        "automated_translation_feedback": "Enviar feedback",
     },
 }
 

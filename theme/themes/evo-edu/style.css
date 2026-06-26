@@ -167,6 +167,25 @@ img {
   color: var(--ink);
 }
 
+.translation-quality-disclaimer {
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent-warm);
+  border-radius: 18px;
+  background: var(--paper-strong);
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}
+
+.translation-quality-disclaimer p {
+  margin: 0;
+}
+
+.translation-quality-disclaimer strong {
+  color: var(--ink);
+}
+
 .hero-card {
   padding: 34px;
   margin-bottom: 22px;

@@ -138,6 +138,58 @@ def _navigation_html(navigation: list[dict[str, str]], current_lang: str) -> str
     )
 
 
+def _source_language(config: dict[str, Any]) -> str:
+    translation = config.get("translation", {})
+    language_policy = config.get("language_policy", {})
+    if isinstance(translation, dict) and translation.get("source_language"):
+        return str(translation["source_language"])
+    if isinstance(language_policy, dict) and language_policy.get("default_language"):
+        return str(language_policy["default_language"])
+    return str(config.get("default_language") or "en")
+
+
+def _is_automated_translation(config: dict[str, Any], lang: str) -> bool:
+    translation = config.get("translation", {})
+    if isinstance(translation, dict):
+        status = str(translation.get("status") or translation.get("review") or "").strip().lower()
+        if status in {"automated", "automated-unreviewed", "machine", "machine-unreviewed"}:
+            return True
+        if translation.get("automated") is True:
+            return True
+    return lang != _source_language(config)
+
+
+def _translation_feedback_href(config: dict[str, Any]) -> str:
+    translation = config.get("translation", {})
+    if isinstance(translation, dict) and translation.get("feedback_url"):
+        return str(translation["feedback_url"])
+    contact_email = str(config.get("contact_email") or "").strip()
+    if contact_email:
+        return f"mailto:{contact_email}"
+    return "#"
+
+
+def _translation_review_meta_html(config: dict[str, Any], lang: str) -> str:
+    if not _is_automated_translation(config, lang):
+        return ""
+    return '<meta name="scisiteforge:translation-review" content="automated-unreviewed" />'
+
+
+def _translation_disclaimer_html(config: dict[str, Any], lang: str) -> str:
+    if not _is_automated_translation(config, lang):
+        return ""
+    label = shell_text(lang, "automated_translation_label")
+    body = shell_text(lang, "automated_translation_body")
+    feedback = shell_text(lang, "automated_translation_feedback")
+    href = _translation_feedback_href(config)
+    return (
+        f'<aside class="translation-quality-disclaimer" data-translation-disclaimer="automated" role="note" aria-label="{html_escape(label)}">'
+        f'<p><strong>{html_escape(label)}</strong>: {html_escape(body)} '
+        f'<a href="{html_escape(href)}">{html_escape(feedback)}</a>.</p>'
+        "</aside>"
+    )
+
+
 def _render_cards(cards: list, template_path: str | Path, lang: str) -> str:
     if not cards:
         return ""
@@ -193,8 +245,9 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
     languages = config.get("languages", [{"code": config.get("lang", "en"), "name": "English", "coverage": True}])
     language_policy = config.get("language_policy", {})
     hero = config.get("hero", {})
+    current_lang = str(config.get("lang", "en"))
     page_context = {
-        "lang": config.get("lang", "en"),
+        "lang": current_lang,
         "page_title": html_escape(config.get("title", config.get("site_title", "SciSiteForge"))),
         "site_title": html_escape(config.get("site_title", "SciSiteForge")),
         "description": html_escape(config.get("description", "")),
@@ -210,36 +263,38 @@ def build_site(config_file: str | Path, output_dir: str | Path) -> dict[str, Any
         "body_class": html_escape(theme.body_class),
         "site_shell_class": html_escape(theme.shell_class),
         "page_class": html_escape(theme.page_class),
-        "navigation_html": _navigation_html(config.get("navigation", []), config.get("lang", "en")),
-        "language_options": _language_options_html(languages, config.get("lang", "en")),
+        "navigation_html": _navigation_html(config.get("navigation", []), current_lang),
+        "language_options": _language_options_html(languages, current_lang),
         "language_selector_html": _language_selector_html(
-            _language_options_html(languages, config.get("lang", "en")),
-            shell_text(config.get("lang", "en"), "language_selector_label"),
+            _language_options_html(languages, current_lang),
+            shell_text(current_lang, "language_selector_label"),
         ),
         "language_policy_html": _language_policy_html(language_policy),
-        "language_selector_label": html_escape(shell_text(config.get("lang", "en"), "language_selector_label")),
+        "language_selector_label": html_escape(shell_text(current_lang, "language_selector_label")),
         "shell_i18n_json": shell_catalog_json(),
+        "translation_review_meta_html": _translation_review_meta_html(config, current_lang),
+        "translation_disclaimer_html": _translation_disclaimer_html(config, current_lang),
         "hero_kicker": html_escape(hero.get("kicker", theme.display_name)),
         "hero_title": html_escape(hero.get("title", config.get("title", ""))),
         "hero_lede": html_escape(hero.get("lede", config.get("description", ""))),
         "hero_actions_html": _hero_actions_html(hero.get("actions", [])),
-        "label_theme": html_escape(shell_text(config.get("lang", "en"), "theme")),
-        "label_language": html_escape(shell_text(config.get("lang", "en"), "language")),
-        "label_sources": html_escape(shell_text(config.get("lang", "en"), "sources")),
-        "label_llm": html_escape(shell_text(config.get("lang", "en"), "llm")),
-        "label_overview": html_escape(shell_text(config.get("lang", "en"), "overview")),
-        "label_what_theme_supports": html_escape(shell_text(config.get("lang", "en"), "what_theme_supports")),
-        "label_notebook_and_apps": html_escape(shell_text(config.get("lang", "en"), "notebook_and_apps")),
-        "label_structured_sources": html_escape(shell_text(config.get("lang", "en"), "structured_sources")),
-        "label_theme_catalog": html_escape(shell_text(config.get("lang", "en"), "theme_catalog")),
-        "label_feature_cards": html_escape(shell_text(config.get("lang", "en"), "feature_cards")),
-        "label_notebook_app_content": html_escape(shell_text(config.get("lang", "en"), "notebook_app_content")),
-        "label_bibliography": html_escape(shell_text(config.get("lang", "en"), "bibliography")),
-        "label_github": html_escape(shell_text(config.get("lang", "en"), "github")),
-        "label_contact": html_escape(shell_text(config.get("lang", "en"), "contact")),
-        "feature_cards_html": _render_cards(site_content.feature_cards, Path(__file__).parent.parent / "templates" / "app-card.html", config.get("lang", "en")),
-        "section_cards_html": _render_cards(site_content.section_cards, Path(__file__).parent.parent / "templates" / "notebook-section.html", config.get("lang", "en")),
-        "app_cards_html": _render_cards(site_content.app_cards, Path(__file__).parent.parent / "templates" / "app-card.html", config.get("lang", "en")),
+        "label_theme": html_escape(shell_text(current_lang, "theme")),
+        "label_language": html_escape(shell_text(current_lang, "language")),
+        "label_sources": html_escape(shell_text(current_lang, "sources")),
+        "label_llm": html_escape(shell_text(current_lang, "llm")),
+        "label_overview": html_escape(shell_text(current_lang, "overview")),
+        "label_what_theme_supports": html_escape(shell_text(current_lang, "what_theme_supports")),
+        "label_notebook_and_apps": html_escape(shell_text(current_lang, "notebook_and_apps")),
+        "label_structured_sources": html_escape(shell_text(current_lang, "structured_sources")),
+        "label_theme_catalog": html_escape(shell_text(current_lang, "theme_catalog")),
+        "label_feature_cards": html_escape(shell_text(current_lang, "feature_cards")),
+        "label_notebook_app_content": html_escape(shell_text(current_lang, "notebook_app_content")),
+        "label_bibliography": html_escape(shell_text(current_lang, "bibliography")),
+        "label_github": html_escape(shell_text(current_lang, "github")),
+        "label_contact": html_escape(shell_text(current_lang, "contact")),
+        "feature_cards_html": _render_cards(site_content.feature_cards, Path(__file__).parent.parent / "templates" / "app-card.html", current_lang),
+        "section_cards_html": _render_cards(site_content.section_cards, Path(__file__).parent.parent / "templates" / "notebook-section.html", current_lang),
+        "app_cards_html": _render_cards(site_content.app_cards, Path(__file__).parent.parent / "templates" / "app-card.html", current_lang),
         "bibliography_html": "\n".join(
             f'<li><strong>{html_escape(card.title)}</strong> <span class="meta">{html_escape(card.body)}</span></li>'
             for card in site_content.bibliography_entries
