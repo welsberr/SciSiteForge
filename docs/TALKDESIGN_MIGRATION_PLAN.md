@@ -36,7 +36,7 @@ reuse.
 
 Local source tree inspected:
 
-- `/home/netuser/dev/sites/talkdesign.org`
+- `/path/to/talkdesign.org`
 - approximately 1,633 files under `public_html`
 - major visible surfaces:
   - legacy root pages such as `index.html`, `tdo.html`, `introfaq.html`,
